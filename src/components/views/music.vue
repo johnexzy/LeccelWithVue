@@ -104,9 +104,8 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-              <hr>
+            <hr />
             <div class="d-flex justify-content-center align-items-center">
-                
               <button
                 type="button"
                 class="btn btn-primary btn-icon-text"
@@ -115,24 +114,43 @@
                 <i class="mdi mdi-share btn-icon-prepend"></i>
                 Share
               </button>
-              
             </div>
-            <hr>
+            <hr />
           </div>
         </div>
+        <div class="d-block border-bottom border-top mb-4 mt-4 text-center">
+          <h3>You may also like:</h3>
+        </div>
+        <div class="row show-music">$relatedMusicUi</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Api_Base } from "@/config/config.js";
-import api from "axios";
+import { Api_Base, api } from "../../config/config.js";
 export default {
   name: "ViewMusic",
   data() {
     return {
       musicObj: {},
+      relatedMusicArr: [
+        //the incoming Objects should replicate this model
+        {
+          id: "48",
+          music_name: "phyno - cho life",
+          music_details: "joj xos xpo noiox onio",
+          artist: "john",
+          music_key: "d91b59d031172b63f11915d2c73244a8",
+          short_url: "phyno_-_cho_life-1129312831",
+          popular: "0",
+          uploaded_by: "Leccel",
+          created_at: "2020-10-16 10:10:10",
+          updated_at: "2020-10-16 10:10:10",
+          images: ["uploads/images/20201016111010951062254.jpg"],
+          comments: [],
+        },
+      ],
       state: "",
     };
   },
@@ -152,14 +170,20 @@ export default {
   methods: {
     init() {
       api
-        .get(`${Api_Base}/api/v1/music/url/${this.$route.params.short_url}`)
+        .get(`/api/v1/music/url/${this.$route.params.short_url}`)
         .then((res) => {
           this.musicObj = res.data;
+          //related Music Obj fires when data changes
+          api.get(`api/v1/search/${this.musicObj.artist}`).then((resp) => {
+            //filters the current Music Obj from the related Music Array of Objects
+            this.relatedMusicArr = resp.data.data[0].data.filter(
+              (val) => val.id !== this.musicObj.id
+            );
+          });
         });
     },
     SharePost(title, details) {
       if (navigator.share) {
-        //alert(phead)
         navigator
           .share({
             title: title,
@@ -169,7 +193,7 @@ export default {
           .then(() => {
             alert("Thanks for Sharing");
           })
-          .catch(alert("WebShare not supported"));
+          .catch((err) => alert(`Unexpected Error Occured ${err}`));
       } else {
         alert("Web Share not suprted");
       }

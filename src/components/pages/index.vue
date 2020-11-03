@@ -235,9 +235,9 @@
             <div class="row">
               <div class="col-xl-12">
                 <div class="row show-music">
-                  <div 
-                    v-for="(lseries, i) in latestSeries" 
-                    :key="i" 
+                  <div
+                    v-for="(lseries, i) in latestSeries"
+                    :key="i"
                     class="col-md-4 grid-margin stretch-card"
                   >
                     <div class="card card-rounded shadow music">
@@ -264,25 +264,9 @@
                             class="font-weight-200 mb-2"
                             style="color: #561529"
                           >
-                            (Download) - {{lseries.series_name}}
+                            (Download) - {{ lseries.series_name }}
                           </h3>
                         </a>
-                        <!-- <div class="d-flex justify-content-between">
-                          <p class="d-inline L5 mb-0">
-                            <i class="mdi mdi-artist"></i>
-                            <a
-                              href="/view/search/${music.artist}"
-                              target="_blank"
-                              class="fs-15 text-muted text-decoration-none"
-                            >
-                              ${music.artist}
-                            </a>
-                          </p>
-                          <p class="d-inline mb-0">
-                            <i class="mdi mdi-comment"></i
-                            >(${music.comments.length})
-                          </p>
-                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -300,6 +284,11 @@ import { mapState } from "vuex";
 import { Api_Base } from "@/config/config.js";
 export default {
   name: "index",
+  data(){
+    return{
+      
+    }
+  },
   beforeMount() {
     this.$store.dispatch("getLatestMusic");
     this.$store.dispatch("getPopularMusic");
@@ -307,7 +296,12 @@ export default {
     this.$store.dispatch("getLatestSeries");
   },
   computed: {
-    ...mapState(["latestMusic", "latestMovies", "latestSeries", "popularMusic"]),
+    ...mapState([
+      "latestMusic",
+      "latestMovies",
+      "latestSeries",
+      "popularMusic",
+    ]),
 
     firstMoviesLayout() {
       return this.latestMovies.slice(0, 2) || this.latestMovies;
@@ -318,6 +312,7 @@ export default {
     },
 
     otherMovies() {
+      
       return this.latestMovies.slice(4) || [];
     },
   },
