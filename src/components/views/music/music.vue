@@ -268,7 +268,7 @@
 </template>
 
 <script>
-import { Api_Base, api } from "../../config/config.js";
+import { Api_Base, api } from "@/config/config.js";
 import timeago from "timeago-simple";
 import $ from "jquery";
 export default {
