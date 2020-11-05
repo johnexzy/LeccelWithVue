@@ -10923,4 +10923,10 @@ footer .footer-bottom {
   transition: .1s all;
 }
 
+.card.shadow:hover {
+  box-shadow: 0 0 0 !important;
+  background: #2e2ee917;
+  transition: .1s all;
+}
+
 /*# sourceMappingURL=maps/style.css.map */

@@ -284,11 +284,7 @@ import { mapState } from "vuex";
 import { Api_Base } from "@/config/config.js";
 export default {
   name: "index",
-  data(){
-    return{
-      
-    }
-  },
+
   beforeMount() {
     this.$store.dispatch("getLatestMusic");
     this.$store.dispatch("getPopularMusic");
@@ -312,7 +308,6 @@ export default {
     },
 
     otherMovies() {
-      
       return this.latestMovies.slice(4) || [];
     },
   },
