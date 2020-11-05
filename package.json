@@ -14,21 +14,23 @@
     "name": "Oba John"
   },
   "dependencies": {
-    "vue": "2.5.2",
     "axios": "^0.19.2",
+    "jquery": "^3.5.1",
+    "timeago-simple": "^1.2.4",
     "vee-validate": "^3.2.5",
+    "vue": "^2.6.12",
+    "vue-loader": "^15.9.3",
+    "vue-meta": "^2.4.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.3.0"
-   },
+  },
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.0.4",
     "@vue/cli-plugin-eslint": "3.0.4",
     "@vue/cli-service": "3.0.4",
+    "del": "^4.1.1",
     "eslint": "5.6.0",
     "eslint-plugin-vue": "4.7.1",
-    "sass": "^1.15.2",
-    "sass-loader": "^7.1.0",
-    "del": "^4.1.1",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-inject": "^5.0.2",
@@ -36,7 +38,10 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "merge-stream": "^2.0.0"
+    "merge-stream": "^2.0.0",
+    "sass": "^1.15.2",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.6.12"
   },
   "eslintConfig": {
     "root": true,
@@ -64,7 +69,7 @@
   ],
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "C:/Users/hp/AppData/Roaming/npm/node_modules/cz-conventional-changelog"
     }
   }
 }

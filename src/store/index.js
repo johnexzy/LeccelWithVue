@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import api from 'axios';
-
-import { Api_Base } from '../config/config';
+import { api } from '../config/config';
 
 Vue.use(Vuex);
 
@@ -17,16 +15,16 @@ export default new Vuex.Store({
     actions: {
         
         async getLatestMusic({ commit }) {
-            return commit('setLatestMusic', await api.get(`${Api_Base}/api/v1/music/limit/10`))
+            return commit('setLatestMusic', await api.get(`/api/v1/music/limit/20`))
         },
         async getPopularMusic({ commit }) {
-            return commit('setPopularMusic', await api.get(`${Api_Base}/api/v1/music/popular/10`))
+            return commit('setPopularMusic', await api.get(`/api/v1/music/popular/10`))
         },
         async getLatestMovie({commit}) {
-            return commit('setLatestMovie', await api.get(`${Api_Base}/api/v1/videos/limit/10`))
+            return commit('setLatestMovie', await api.get(`/api/v1/videos/limit/10`))
         },
         async getLatestSeries({commit}) {
-            return commit('setLatestSeries', await api.get(`${Api_Base}/api/v1/series/limit/9`))
+            return commit('setLatestSeries', await api.get(`/api/v1/series/limit/9`))
         }
     },
 
