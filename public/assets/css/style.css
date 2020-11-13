@@ -10929,4 +10929,8 @@ footer .footer-bottom {
   transition: .1s all;
 }
 
+.shadow-inset {
+  box-shadow: inset 1px 0px 0.5px 1px;
+}
+
 /*# sourceMappingURL=maps/style.css.map */

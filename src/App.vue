@@ -11,8 +11,8 @@
     </div>
     <div class="d-flex align-items-center justify-content-center pad2x">
       <p class="mt-2">
-        <a href="/pages/aboutus.html">About Us </a> |
-        <a href="/pages/contactus.html">Contact Us</a>
+        <router-link to="/aboutus">About Us </router-link> |
+        <router-link to="/contactus">Contact Us</router-link>
       </p>
     </div>
     <Footer />
@@ -22,7 +22,7 @@
 <script>
 import NavBar from "@/components/layout/Nav.vue";
 import Footer from "@/components/layout/Footer.vue";
-
+import $ from "jquery";
 export default {
   name: "App",
   components: {
@@ -34,6 +34,16 @@ export default {
     // this.$store.dispatch("getPopularMusic");
     // this.$store.dispatch("getLatestMovie");
     // this.$store.dispatch("getLatestSeries");
+  },
+  watch: {
+    $route() {
+      $("body, html").animate(
+        {
+          scrollTop: 0,
+        },
+        500
+      );
+    },
   },
 };
 </script>

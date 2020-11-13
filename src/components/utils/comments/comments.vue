@@ -2,11 +2,11 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="post-comment-section">
-        <i class="mdi mdi-comment"></i>
-        <span class="count text-monospace fs-13"
+        <i class="mdi mdi-comment"/>
+        <!-- <span v-if="comments.length" class="count text-monospace fs-13"
           >({{ comments.length }})</span
-        >
-        <div class="mt-4"></div>
+        > -->
+        <div class="mt-4"/>
         <div class="comment-section">
           <div
             v-for="(comment, i) in comments"
@@ -19,7 +19,7 @@
                   src="/assets/images/avatar.png"
                   alt="banner"
                   class="img-fluid img-rounded mr-3"
-                />
+                >
               </div>
               <div>
                 <p class="fs-12 mb-1 line-height-xs">
@@ -53,12 +53,12 @@
                       class="form-control textarea"
                       placeholder="Comment *"
                       v-model="comment"
-                    ></textarea>
+                    />
 
                     <div
                       class="alert"
                       v-for="(datum, i) in errors"
-                      v-bind:key="i"
+                      :key="i"
                     >
                       <i>{{ datum }}</i>
                     </div>
@@ -75,7 +75,7 @@
                     class="form-control"
                     aria-describedby="name"
                     placeholder="Name *"
-                  />
+                  >
                 </div>
               </div>
             </div>
@@ -115,9 +115,11 @@ export default {
   },
   props: {
     commentKey: {
-      type: String,
       required: true,
+      default: "kjkjbljkbljbljkb",
+      type: String
     },
+    // eslint-disable-next-line vue/require-default-prop
     comments:{
         type: Array
     }
@@ -127,7 +129,11 @@ export default {
       comment: "",
       name: "",
       commentResp: undefined,
+      comlen: 0
     };
+  },
+  mounted(){
+    this.comlen = this.comments.length
   },
   methods: {
     addComment() {

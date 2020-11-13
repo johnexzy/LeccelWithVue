@@ -1,0 +1,120 @@
+<template>
+  <div class="container">
+    <div class="card card-square">
+      <!-- {{ seasonObj.series_name }} -->
+      <div class="card-header">
+        <p 
+          class="font-weight-bold" 
+          style="text-align: center">
+          {{ seasonObj.series_name }} - {{ seasonObj.season_name }}
+        </p>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <b
+            >Download {{ seasonObj.series_name }}:
+              {{ seasonObj.season_name }}</b
+              >
+
+            <hr >
+            <router-link
+              v-for="(ep, i) in seasonObj.episodes"
+              :key="i"
+              tag="div"
+              :to="`/episode/${seasonObj.series_name}/${ep.short_url}`"
+            >
+              <div
+                class="d-flex justify-content-start border-bottom py-3 shadow"
+                style="cursor: pointer"
+              >
+                <h4 class="d-inline ml-1 font-weight-bold text-primary">
+                  {{ ep.ep_name }}
+                </h4>
+              </div>
+            </router-link>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <hr >
+            <share
+              :phead="seasonObj.series_name"
+              :pbody="seasonObj.season_name"
+            />
+            <hr >
+          </div>
+        </div>
+        <div class="mt-3"/>
+
+        <comment
+          :comment-key="seasonObj.season_key"
+          :comments="seasonObj.comments"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { api, Api_Base } from "@/config/config.js";
+import carouselImg from "@/components/utils/carousel/carouselImage.vue";
+import comment from "@/components/utils/comments/comments.vue";
+import share from "@/components/utils/share/share.vue";
+import timeago from "timeago-simple";
+export default {
+  name: "ViewSeasons",
+  components: {
+    comment,
+    carouselImg,
+    share,
+  },
+  data() {
+    return {
+      seasonObj: {},
+      state: {},
+    };
+  },
+  mounted() {
+    this.init();
+  },
+  filters: {
+    formatSrc(link) {
+      return `${Api_Base}/${link}`;
+    },
+  },
+  watch: {
+    $route() {
+      this.init();
+    },
+  },
+  methods: {
+    init() {
+      api
+        .get(
+          `/api/v1/season/${this.$route.params.series_name}/${this.$route.params.season_short_url}`
+        )
+        .then((res) => {
+          this.seasonObj = res.data;
+          this.seasonObj.episodes = this.seasonObj.episodes.map((x) => ({
+            ep_name: `Episode ${x.ep_name.charAt(3)}`,
+            ep_key: x.ep_key,
+            ep_details: x.ep_details,
+            season_key: x.season_key,
+            short_url: x.short_url,
+          }));
+          this.seasonObj.comments = this.seasonObj.comments.map((x) => ({
+            name: x.name,
+            comment: x.comment,
+            updated_at: timeago.simple(x.updated_at),
+          }));
+        });
+    },
+  },
+  metaInfo: {
+    title: `Leccel::${window.location.href.substr(
+      window.location.href.lastIndexOf("/") + 1
+    )}`,
+  },
+};
+</script>
