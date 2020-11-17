@@ -2,23 +2,27 @@
   <div class="container">
     <div class="col-sm-12">
       <div class="mb-3 text-light">
-        <a 
-          href="/" 
-          class="mb-1 font-weight-bold pad2x text-decoration-none text-light">Home</a> &RightArrow; 
-        <a 
-          href="#" 
-          class="mb-1 font-weight-bold pad2x text-decoration-none text-light">Search Result for ({{ query }}) </a>
+        <a
+          href="/"
+          class="mb-1 font-weight-bold pad2x text-decoration-none text-light"
+        >Home</a
+        >
+        &RightArrow;
+        <a
+          href="#"
+          class="mb-1 font-weight-bold pad2x text-decoration-none text-light"
+        >Search Result for ({{ query }})
+        </a>
       </div>
     </div>
-    <div 
-      v-show="!state">
+    <div v-show="!state">
       <div class="d-flex justify-content-center">
         <img 
           src="/assets/images/loader.gif" 
           alt="" >
       </div>
     </div>
-    <div
+    <div 
       v-show="state" 
       class="row">
       <div class="col-md-12 grid-margin stretch-card">
@@ -78,143 +82,112 @@
             </ul>
             <div class="tab-content py-3 px-5">
               <div
-                :class="`tab-pane fade show ${checkGroup('music') ? 'active' : ''}`"
+                :class="`tab-pane fade show ${
+                  checkGroup('music') ? 'active' : ''
+                }`"
                 id="music"
                 role="tabpanel"
                 aria-labelledby="music-tab"
               >
-                <div 
-                  class="row" 
-                  v-for="(m, i) in musicSearch" 
-                  :key="i">
-                  <div class="col-sm-4 grid-margin">
-                    <router-link
-                      :to="{
-                        name: 'Music',
-                        params: { short_url: m.short_url },
-                      }"
-                      style="text-decoration: none; color: inherit"
-                    >
-                      <div class="rotate-img">
-                        <img
-                          :src="m.images[0] | formatSrc"
-                          alt="banner"
-                          class="img-fluid"
-                        >
-                      </div>
-                    </router-link>
-                  </div>
-                  <div class="col-sm-8 grid-margin">
-                    <h2 class="font-weight-600 mb-2">
-                      <router-link
-                        :to="{
-                          name: 'Music',
-                          params: { short_url: m.short_url },
-                        }"
-                        style="text-decoration: none; color: inherit"
+                <router-link
+                  v-for="(m, i) in musicSearch"
+                  :key="i"
+                  class="h3 font-weight-200 mb-1"
+                  :to="`/music/${m.short_url}`"
+                  style="text-decoration: none; color: inherit"
+                >
+                  <div
+                    class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
+                    style="cursor: pointer"
+                  >
+                    <h4 class="d-inline font-weight-200 mb-0">
+                      <img
+                        :src="m.images[0] | formatSrc"
+                        style="width: 60px; height: 60px"
+                        alt=""
+                        class="card-img d-inline"
                       >
-                        {{ m.music_name }}
-                      </router-link>
-                    </h2>
-
-                    <p class="L5 mb-0">
-                      <i class="mdi mdi-artist" />
-                      <span class="fs-16 mr-2 text-muted">{{ m.artist }}</span>
-                    </p>
+                    </h4>
+                    <h4 class="d-inline ml-3 font-weight-bold text-primary">
+                      {{ m.music_name }}
+                      <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
+                        uploaded on {{ formatDate(m.created_at) }}
+                      </p>
+                    </h4>
                   </div>
-                </div>
+                </router-link>
               </div>
               <div
-                :class="`tab-pane fade show ${checkGroup('movies') ? 'active' : ''}`"
+                :class="`tab-pane fade show ${
+                  checkGroup('movies') ? 'active' : ''
+                }`"
                 id="movies"
                 role="tabpanel"
                 aria-labelledby="movies-tab"
               >
-                <div 
-                  class="row" 
-                  v-for="(v, i) in videoSearch" 
-                  :key="i">
-                  <div class="col-sm-4 grid-margin">
-                    <router-link
-                      :to="{
-                        name: 'Movie',
-                        params: { short_url: v.short_url },
-                      }"
-                      style="text-decoration: none; color: inherit"
-                    >
-                      <div class="rotate-img">
-                        <img
-                          :src="v.images[0] | formatSrc"
-                          alt="banner"
-                          class="img-fluid"
-                        >
-                      </div>
-                    </router-link>
-                  </div>
-                  <div class="col-sm-8 grid-margin">
-                    <h2 class="font-weight-600 mb-2">
-                      <router-link
-                        :to="{
-                          name: 'Movie',
-                          params: { short_url: v.short_url },
-                        }"
-                        style="text-decoration: none; color: inherit"
+                <router-link
+                  v-for="(v, i) in videoSearch"
+                  :key="i"
+                  class="h3 font-weight-200 mb-1"
+                  :to="`/video/${v.short_url}`"
+                  tag="div"
+                >
+                  <div
+                    class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
+                    style="cursor: pointer"
+                  >
+                    <h4 class="d-inline font-weight-200 mb-0">
+                      <img
+                        :src="v.images[0] | formatSrc"
+                        style="width: 60px; height: 60px"
+                        alt=""
+                        class="card-img d-inline"
                       >
-                        {{ v.video_name }}
-                      </router-link>
-                    </h2>
-
-                    <p class="L5 mb-0">
-                      <i class="mdi mdi-artist" />
-                      <span 
-                        class="fs-16 mr-2 text-muted"
-                      >{{ v.category }}</span
-                      >
-                    </p>
+                    </h4>
+                    <h4 class="d-inline ml-3 font-weight-bold text-primary">
+                      {{ v.video_name }}
+                      <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
+                        uploaded on {{ formatDate(v.created_at) }}
+                      </p>
+                    </h4>
                   </div>
-                </div>
+                </router-link>
               </div>
               <div
-                :class="`tab-pane fade show ${checkGroup('series') ? 'active' : ''}`"
+                :class="`tab-pane fade show ${
+                  checkGroup('series') ? 'active' : ''
+                }`"
                 id="series"
                 role="tabpanel"
                 aria-labelledby="series-tab"
               >
-                <div 
-                  class="row" 
-                  v-for="(s, i) in seriesSearch" 
-                  :key="i">
-                  <div class="col-sm-4 grid-margin">
-                    <router-link
-                      :to="{
-                        name: 'Series',
-                        params: { short_url: s.short_url },
-                      }"
-                      style="text-decoration: none; color: inherit"
-                    >
-                      <div class="rotate-img">
-                        <img
-                          :src="s.images[0] | formatSrc"
-                          alt="banner"
-                          class="img-fluid"
-                        >
-                      </div>
-                    </router-link>
-                  </div>
-                  <div class="col-sm-8 grid-margin">
-                    <h2 class="font-weight-600 mb-2">
-                      <router-link
-                        :to="{
-                          name: 'Series',
-                          params: { short_url: s.short_url },
-                        }"
-                        style="text-decoration: none; color: inherit"
+                <router-link
+                  v-for="(s, i) in seriesSearch"
+                  :key="i"
+                  class="h3 font-weight-200 mb-1"
+                  :to="`/series/${s.short_url}`"
+                  style="text-decoration: none; color: inherit"
+                >
+                  <div
+                    class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
+                    style="cursor: pointer"
+                  >
+                    <h4 class="d-inline font-weight-200 mb-0">
+                      <img
+                        :src="s.images[0] | formatSrc"
+                        style="width: 60px; height: 60px"
+                        alt=""
+                        class="card-img d-inline"
                       >
-                        {{ s.series_name }}
-                      </router-link>
-                    </h2>
+                    </h4>
+                    <h4 class="d-inline ml-2 font-weight-bold text-primary">
+                      {{ s.series_name }}
+                      <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
+                        uploaded on {{ formatDate(s.created_at) }}
+                      </p>
+                    </h4>
                   </div>
-                </div>
+                </router-link>
               </div>
             </div>
           </div>
@@ -235,7 +208,7 @@ export default {
       group: this.$route.params.group,
       query: this.$route.params.query,
       search: [],
-      state: false
+      state: false,
     };
   },
   mounted() {
@@ -244,24 +217,28 @@ export default {
   watch: {
     $route() {
       this.init();
-      this.query = this.$route.params.query
+      this.query = this.$route.params.query;
     },
   },
   methods: {
     init() {
-      this.state = false
+      this.state = false;
       api.get(`/api/v1/search/${this.$route.params.query}`).then((res) => {
         // this.search = res.data.data.filter((s) => s.group === this.group);
         this.search = res.data.data;
-        this.state = true
+        this.state = true;
       });
     },
     /**
      * @param {string} group
      */
-    checkGroup(group){
-        return (this.group == group)
-    }
+    checkGroup(group) {
+      return this.group == group;
+    },
+    formatDate(c) {
+      let ss = new Date(Date.parse(c));
+      return ss.toLocaleDateString();
+    },
   },
   computed: {
     seriesSearch() {

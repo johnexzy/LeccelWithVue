@@ -86,6 +86,9 @@
                   </h4>
                   <h4 class="d-inline ml-1 font-weight-bold text-primary">
                     {{ pvideo.video_name }}
+                    <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
+                      uploaded on {{ formatDate(pvideo.created_at) }}
+                    </p>
                   </h4>
                 </div>
               </router-link>
@@ -139,11 +142,11 @@
                             class="font-weight-200 mb-2"
                             style="color: #561529"
                           >
-                            (Download MP4) - {{ video.video_name }}
+                            (MP4) - {{ video.video_name }}
                           </h3>
                           <div class="d-flex justify-content-between">
                             <p class="d-inline L5 mb-0">
-                              <i class="mdi mdi-artist"/>
+                              <i class="mdi mdi-tag"/>
 
                               {{ video.category }}
                             </p>
@@ -245,6 +248,10 @@ export default {
     },
     changeRoute() {
       this.$router.push(`/search/movies/${encodeURI(this.query)}`)
+    },
+    formatDate(c) {
+      let ss = new Date(Date.parse(c));
+      return ss.toLocaleDateString();
     },
   },
   beforeMount() {

@@ -85,6 +85,9 @@
                   </h4>
                   <h4 class="d-inline ml-1 font-weight-bold text-primary">
                     {{ pmusic.music_name }}
+                    <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
+                      uploaded on {{ formatDate(pmusic.created_at) }}
+                    </p>
                   </h4>
                 </div>
               </router-link>
@@ -241,6 +244,10 @@ export default {
             this.current_page === this.total_pages ? true : false;
           this.loading = false;
         });
+    },
+    formatDate(c) {
+      let ss = new Date(Date.parse(c));
+      return ss.toLocaleDateString();
     },
   },
   beforeMount() {

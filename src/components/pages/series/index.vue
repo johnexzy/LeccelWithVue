@@ -67,6 +67,9 @@
                   </h4>
                   <h4 class="d-inline ml-1 font-weight-bold text-primary">
                     {{ pseries.series_name }}
+                    <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
+                      uploaded on {{ formatDate(pseries.created_at) }}
+                    </p>
                   </h4>
                 </div>
               </router-link>
@@ -131,13 +134,13 @@
                           </h3>
                           <div class="d-flex justify-content-between">
                             <p class="d-inline L5 mb-0">
-                              <i class="mdi mdi-artist"/>
+                              <i class="mdi mdi-timer"/>
                               <a
                                 href="/view/search/${series.artist}"
                                 target="_blank"
                                 class="fs-15 text-muted text-decoration-none"
                               >
-                                {{ series.category }}
+                                {{ formatDate(series.created_at) }}
                               </a>
                             </p>
                             <p class="d-inline mb-0">
@@ -271,6 +274,10 @@ export default {
             this.current_page === this.total_pages ? true : false;
           this.loading = false;
         });
+    },
+    formatDate(c) {
+      let ss = new Date(Date.parse(c));
+      return ss.toLocaleDateString();
     },
   },
   beforeMount() {
