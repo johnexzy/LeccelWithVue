@@ -1,7 +1,17 @@
 
 <template>
   <div class="container">
-    <div class="card card-square">
+    <div 
+      v-show="!state">
+      <div class="d-flex justify-content-center">
+        <img 
+          src="/assets/images/loader.gif" 
+          alt="" >
+      </div>
+    </div>
+    <div 
+      v-show="state"
+      class="card card-square">
       <!-- {{ episodeObj.video_name }} -->
       <div class="card-header">
         <p 
@@ -62,24 +72,17 @@
 /* eslint-disable no-unused-vars */
 import { api, Api_Base } from "@/config/config.js";
 import { formatVideos } from "@/helpers/ArrayFormatter";
-import carouselImg from "@/components/utils/carousel/carouselImage.vue";
-import comment from "@/components/utils/comments/comments.vue";
-import share from "@/components/utils/share/share.vue";
+
 // eslint-disable-next-line no-unused-vars
 
 import timeago from "timeago-simple";
-import $ from "jquery";
 export default {
   name: "ViewEpisodes",
-  components: {
-    comment,
-    carouselImg,
-    share
-  },
+
   data() {
     return {
       episodeObj: {},
-      state: {},
+      state: false,
     };
   },
   mounted() {
@@ -93,16 +96,12 @@ export default {
   watch: {
     $route() {
       this.init();
-      $("body,html").animate(
-        {
-          scrollTop: 0,
-        },
-        500
-      );
+      
     },
   },
   methods: {
     init() {
+      this.state = false
       api
         .get(
           `/api/v1/episode/${this.$route.params.series_name}/${this.$route.params.episode_short_url}`
@@ -114,6 +113,7 @@ export default {
             comment: x.comment,
             updated_at: timeago.simple(x.updated_at),
           }));
+          this.state = true
         });
     },
 

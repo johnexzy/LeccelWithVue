@@ -15,7 +15,13 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "@mdi/font": "^3.6.95",
+    "aos": "^2.3.4",
+    "browser-sync": "^2.26.12",
+    "bootstrap": "^4.5.3",
     "jquery": "^3.5.1",
+    "nprogress": "^0.2.0",
+    "popper.js": "^1.16.1",
     "timeago-simple": "^1.2.4",
     "vee-validate": "^3.2.5",
     "vue": "^2.6.12",

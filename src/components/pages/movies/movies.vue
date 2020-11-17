@@ -5,13 +5,13 @@
         <div class="d-flex justify-content-between align-items-center">
           <p style="font-size: 17px; font-weight: bold">Movies</p>
 
-          <a
+          <router-link
             class="mb-2 btn btn-outline-light btn-primary btn-info"
             style="font-size: 16px"
-            href="pages/movies.html"
+            to="/view/movies"
           >
             Go to Movies <b class="mdi">&RightArrow;</b>
-          </a>
+          </router-link>
         </div>
       </div>
       <div class="card-body">
@@ -35,7 +35,7 @@
                         alt="thumb"
                         style="border-radius: 10px"
                         class="img-fluid"
-                      />
+                      >
                     </div>
                   </router-link>
                   <div class="badge-positioned w-90">
@@ -49,8 +49,7 @@
                         <router-link
                           :to="`/video/${lmovie.short_url}`"
                           style="text-decoration: none; color: inherit"
-                          ><i class="mdi mdi-play"></i
-                        ></router-link>
+                        ><i class="mdi mdi-play"/></router-link>
                       </div>
                     </div>
                   </div>
@@ -76,7 +75,7 @@
                         alt="thumb"
                         style="border-radius: 10px"
                         class="img-fluid"
-                      />
+                      >
                     </div>
                   </router-link>
                   <div class="badge-positioned w-90">
@@ -90,8 +89,7 @@
                         <router-link
                           :to="`/video/${lmovie.short_url}`"
                           style="text-decoration: none; color: inherit"
-                          ><i class="mdi mdi-play"></i
-                        ></router-link>
+                        ><i class="mdi mdi-play"/></router-link>
                       </div>
                     </div>
                   </div>
@@ -102,12 +100,12 @@
           <div class="col-lg-4">
             <div class="d-flex justify-content-between align-items-center">
               <div class="card-title">More Videos</div>
-              <a
+              <router-link
                 class="mb-2 btn btn-outline-light btn-primary btn-info"
-                href="pages/movies.html"
+                to="/view/movies"
               >
                 See All Movies
-              </a>
+              </router-link>
             </div>
             <!-- All Movie -->
             <router-link
@@ -127,7 +125,7 @@
                     style="width: 60px; height: 60px"
                     alt=""
                     class="card-img d-inline"
-                  />
+                  >
                 </h4>
                 <h4 class="d-inline ml-1 font-weight-bold text-primary">
                   {{ lmovie.video_name }}
@@ -143,7 +141,7 @@
 
 <script>
 export default {
-  name: "moviesIndex",
+  name: "MoviesIndex",
   props: {
     latestMovies: {
       type: Array,

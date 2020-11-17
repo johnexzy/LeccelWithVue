@@ -1,6 +1,16 @@
 <template>
   <div class="container">
-    <div class="card card-square">
+    <div 
+      v-show="!state">
+      <div class="d-flex justify-content-center">
+        <img 
+          src="/assets/images/loader.gif" 
+          alt="" >
+      </div>
+    </div>
+    <div 
+      v-show="state"
+      class="card card-square">
       <!-- {{ seasonObj.series_name }} -->
       <div class="card-header">
         <p 
@@ -58,21 +68,14 @@
 
 <script>
 import { api, Api_Base } from "@/config/config.js";
-import carouselImg from "@/components/utils/carousel/carouselImage.vue";
-import comment from "@/components/utils/comments/comments.vue";
-import share from "@/components/utils/share/share.vue";
+
 import timeago from "timeago-simple";
 export default {
   name: "ViewSeasons",
-  components: {
-    comment,
-    carouselImg,
-    share,
-  },
   data() {
     return {
       seasonObj: {},
-      state: {},
+      state: false,
     };
   },
   mounted() {
@@ -90,6 +93,7 @@ export default {
   },
   methods: {
     init() {
+      this.state = false
       api
         .get(
           `/api/v1/season/${this.$route.params.series_name}/${this.$route.params.season_short_url}`
@@ -108,6 +112,7 @@ export default {
             comment: x.comment,
             updated_at: timeago.simple(x.updated_at),
           }));
+          this.state = true
         });
     },
   },

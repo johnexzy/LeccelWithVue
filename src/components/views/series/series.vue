@@ -1,6 +1,16 @@
 <template>
   <div class="container">
-    <div class="card card-square">
+    <div 
+      v-show="!state">
+      <div class="d-flex justify-content-center">
+        <img 
+          src="/assets/images/loader.gif" 
+          alt="" >
+      </div>
+    </div>
+    <div 
+      v-show="state"
+      class="card card-square">
       <!-- {{ seriesObj.series_name }} -->
       <div class="card-header">
         <p 
@@ -95,24 +105,15 @@
 
 <script>
 import { api, Api_Base } from "@/config/config.js";
-import carouselImg from "@/components/utils/carousel/carouselImage.vue";
-import comment from "@/components/utils/comments/comments.vue";
-import share from "@/components/utils/share/share.vue";
 import { formatSeries } from "@/helpers/ArrayFormatter";
 import timeago from "timeago-simple";
-import $ from "jquery";
 export default {
   name: "ViewSeries",
-  components: {
-    comment,
-    carouselImg,
-    share,
-  },
   data() {
     return {
       seriesObj: {},
       relatedseriesArr: [],
-      state: {},
+      state: false,
     };
   },
   mounted() {
@@ -126,16 +127,11 @@ export default {
   watch: {
     $route() {
       this.init();
-      $("body,html").animate(
-        {
-          scrollTop: 0,
-        },
-        500
-      );
     },
   },
   methods: {
     init() {
+      this.state = false
       api
         .get(`/api/v1/series/url/${this.$route.params.short_url}`)
         .then((res) => {
@@ -151,11 +147,11 @@ export default {
             .get(`/api/v1/search/${this.seriesObj.series_name}`)
             .then((resp) => {
               //removes the current series from relatedseriesArray
-              this.state = resp.data;
               this.relatedseriesArr = formatSeries(
                 resp.data.data[2].data
               ).filter((val) => val.id !== this.seriesObj.id);
             });
+            this.state = true
         });
     },
   },

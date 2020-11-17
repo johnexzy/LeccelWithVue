@@ -1,9 +1,20 @@
 
 <template>
   <div class="container">
-    <div class="card card-square">
+    <div 
+      v-show="!state">
+      <div class="d-flex justify-content-center">
+        <img 
+          src="/assets/images/loader.gif" 
+          alt="" >
+      </div>
+    </div>
+    <div 
+      v-show="state"
+      class="card card-square">
       <!-- {{ videoObj.video_name }} -->
-      <div class="card-header">
+      <div 
+        class="card-header">
         <p 
           class="font-weight-bold" 
           style="text-align: center">
@@ -11,7 +22,11 @@
         </p>
       </div>
       <div class="card-body">
-        <div class="row">
+      
+        
+        
+        <div 
+          class="row">
           <div class="col-sm-6">
             <div class="row">
               <div class="col-lg-12 mb-5 mb-sm-2">
@@ -25,13 +40,15 @@
             <p style="line-height: 2.5">{{ videoObj.video_details }}</p>
             <hr >
             <a
-              :href="videoObj.videos[0].video_url | formatSrc"
+              v-for="(f, i) in videoObj.videos"
+              :key="i"
+              :href="f.video_url | formatSrc"
               class="btn btn-primary btn-lg btn-block"
               download
             >
               Download MP4 ({{
                 (
-                  Number(videoObj.videos[0].video_bytes) /
+                  Number(f.video_bytes) /
                   (1024 * 1024)
                 ).toFixed(2)
               }}mb)
@@ -106,25 +123,17 @@
 /* eslint-disable no-unused-vars */
 import { api, Api_Base } from "@/config/config.js";
 import { formatVideos } from "@/helpers/ArrayFormatter";
-import carouselImg from "@/components/utils/carousel/carouselImage.vue";
-import comment from "@/components/utils/comments/comments.vue";
-import share from "@/components/utils/share/share.vue";
-// eslint-disable-next-line no-unused-vars
 
 import timeago from "timeago-simple";
-import $ from "jquery";
+// ;
 export default {
   name: "ViewVideo",
-  components: {
-    comment,
-    carouselImg,
-    share
-  },
+
   data() {
     return {
       videoObj: {},
       relatedvideoArr: [],
-      state: {},
+      state: false,
     };
   },
   mounted() {
@@ -138,16 +147,11 @@ export default {
   watch: {
     $route() {
       this.init();
-      $("body,html").animate(
-        {
-          scrollTop: 0,
-        },
-        500
-      );
     },
   },
   methods: {
     init() {
+      this.state = false
       api
         .get(`/api/v1/videos/url/${this.$route.params.short_url}`)
         .then((res) => {
@@ -161,11 +165,11 @@ export default {
           //related video Obj fires when {this.videoObj} is updated
           api.get(`/api/v1/search/${this.videoObj.video_name}`).then((resp) => {
             //removes the current video from relatedvideoArray
-            this.state = resp.data;
             this.relatedvideoArr = resp.data.data[1].data.filter(
               (val, i) => val.id !== this.videoObj.id && i < 8
             );
           });
+          this.state = true
         });
     },
   },

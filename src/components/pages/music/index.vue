@@ -122,6 +122,7 @@
                       :key="i"
                       :to="`/music/${music.short_url}`"
                       tag="div"
+                      style="cursor: pointer"
                       class="col-md-4 grid-margin stretch-card"
                     >
                       <div class="card card-rounded shadow music">
@@ -147,13 +148,12 @@
                           <div class="d-flex justify-content-between">
                             <p class="d-inline L5 mb-0">
                               <i class="mdi mdi-artist"/>
-                              <a
-                                href="/view/search/${music.artist}"
-                                target="_blank"
+                              <router-link
+                                :to="`/search/music/${music.artist}`"
                                 class="fs-15 text-muted text-decoration-none"
                               >
                                 {{ music.artist }}
-                              </a>
+                              </router-link>
                             </p>
                             <p class="d-inline mb-0">
                               <i class="mdi mdi-comment"/>({{

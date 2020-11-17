@@ -3,9 +3,10 @@
     <div class="col-sm-6">
       <div class="post-comment-section">
         <i class="mdi mdi-comment"/>
-        <!-- <span v-if="comments.length" class="count text-monospace fs-13"
-          >({{ comments.length }})</span
-        > -->
+        <span 
+          class="count text-monospace fs-13"
+        >({{ comments.length }})</span
+        >
         <div class="mt-4"/>
         <div class="comment-section">
           <div

@@ -8,34 +8,57 @@
           src="/assets/images/LECCEL3.png" 
           alt="" >
       </router-link>
-      <div 
-        class="form-group" 
-        data-aos="fade-down">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control searchInput border-info shadow-inset"
-            style="border-radius: 20px; height: 40px"
-            placeholder="Search here"
-          >
-          <div class="input-group-append">
-            <button
-              class="btn btn-sm btn-info btn-icon-text searchButton text-center"
-              style="
-                border-radius: 0 20px 20px 0;
-                margin-left: -20px;
-                z-index: 1000;
-                max-width: 10%;
-              "
-              type="button"
+      <!-- <form @submit="changeRoute()"> -->
+      <ValidationObserver v-slot="{ passes }">
+        <form @submit.prevent="passes(changeRoute)">
+          <div 
+            class="form-group" 
+            data-aos="fade-down">
+            <ValidationProvider
+              name="search"
+              rules="maxlength"
+              v-slot="{ errors }"
             >
-              <i class="mdi mdi-search-web"/>
-            </button>
+              <div class="input-group">
+              
+                <input
+                  v-model="query"
+                  type="text"
+                  class="form-control searchInput border-info shadow-inset"
+                  style="border-radius: 20px; height: 40px"
+                  placeholder="Search here"
+                >
+                
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-sm btn-info btn-icon-text searchButton text-center"
+                    style="
+                  border-radius: 0 20px 20px 0;
+                  margin-left: -20px;
+                  z-index: 1000;
+                  max-width: 10%;
+                "
+                  >
+                    <i class="mdi mdi-search-web" />
+                  </button>
+                </div>
+              
+              </div>
+              <div
+                class="alert alert-danger mr-3 fs-12 p-0"
+                v-for="(datum, i) in errors"
+                :key="i"
+              >
+                <i>{{ datum }}</i>
+              </div>
+            </ValidationProvider>
           </div>
-        </div>
-      </div>
+
+        </form>
+      </ValidationObserver>
     </div>
-    <div class="d-block text-center border-top menu-bottom">
+    <div  
+      :class="`d-block text-center border-top menu-bottom ${sticky ? 'sticky' : ''}`">
       <div class="d-flex justify-content-center">
         <ul 
           class="d-flex flex-flow" 
@@ -47,7 +70,7 @@
             <router-link 
               to="/" 
               class="text-decoration-none">
-              <i class="d-block mdi mdi-24px mdi-home"/>
+              <i class="d-block mdi mdi-24px mdi-home" />
               <p class="font-weight-bold text-uppercase">Home</p>
             </router-link>
           </li>
@@ -58,7 +81,7 @@
             <router-link 
               to="/view/music" 
               class="text-decoration-none">
-              <i class="d-block mdi mdi-24px mdi-music-note"/>
+              <i class="d-block mdi mdi-24px mdi-music-note" />
               <p class="font-weight-bold text-uppercase">Music</p>
             </router-link>
           </li>
@@ -69,7 +92,7 @@
             <router-link 
               to="/view/movies" 
               class="text-decoration-none">
-              <i class="d-block mdi mdi-24px mdi-video"/>
+              <i class="d-block mdi mdi-24px mdi-video" />
               <p class="font-weight-bold text-uppercase">Movies</p>
             </router-link>
           </li>
@@ -80,7 +103,7 @@
             <router-link 
               to="/view/series" 
               class="text-decoration-none">
-              <i class="d-block mdi mdi-24px mdi-movie"/>
+              <i class="d-block mdi mdi-24px mdi-movie" />
               <p class="font-weight-bold text-uppercase">Series</p>
             </router-link>
           </li>
@@ -90,7 +113,33 @@
   </div>
 </template>
 <script>
+import { ValidationProvider, extend, ValidationObserver } from "vee-validate";
+extend("maxlength", {
+  validate: v => v.length > 3,
+  message: "search value too small"
+})
 export default {
   name: "NavBar",
+  components:{
+    ValidationProvider,
+    ValidationObserver
+  },
+  data() {
+    return {
+      query: "",
+      sticky: false
+    };
+  },
+  mounted(){
+    window.addEventListener('scroll', this.addSticky)
+  },
+  methods: {
+    changeRoute() {
+      this.$router.push(`/search/music/${encodeURI(this.query)}`)
+    },
+    addSticky(){
+      this.sticky = window.pageYOffset > 130 
+    }
+  },
 };
 </script>

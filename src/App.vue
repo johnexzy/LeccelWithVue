@@ -22,7 +22,7 @@
 <script>
 import NavBar from "@/components/layout/Nav.vue";
 import Footer from "@/components/layout/Footer.vue";
-import $ from "jquery";
+
 export default {
   name: "App",
   components: {
@@ -30,22 +30,12 @@ export default {
     NavBar,
   },
   beforeMount() {
-    // this.$store.dispatch("getLatestMusic");
-    // this.$store.dispatch("getPopularMusic");
-    // this.$store.dispatch("getLatestMovie");
-    // this.$store.dispatch("getLatestSeries");
-  },
-  watch: {
-    $route() {
-      $("body, html").animate(
-        {
-          scrollTop: 0,
-        },
-        500
-      );
-    },
+    this.$store.dispatch("getLatestMusic");
+    this.$store.dispatch("getPopularMusic");
+    this.$store.dispatch("getLatestMovie");
+    this.$store.dispatch("getLatestSeries");
+    this.$store.dispatch("getPopularVideo");
+    this.$store.dispatch("getPopularSeries");
   },
 };
 </script>
-<style scoped>
-</style>

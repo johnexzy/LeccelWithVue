@@ -11,12 +11,6 @@ const helpers = {
                 id: m.id,
                 images: m.images.map(x => `${Api_Base}/${x}`),
                 popular: m.popular,
-                audio: m.audio.map(y => (
-                    {
-                        song_url: `${Api_Base}/${y.song_url}`,
-                        song_bytes: y.song_bytes
-                    }
-                )),
                 music_details: m.music_details,
                 music_key: m.music_key,
                 music_name: m.music_name,

@@ -28,20 +28,13 @@ export default {
     musicIndex,
     seriesIndex,
   },
-  beforeMount() {
-    this.$store.dispatch("getLatestMusic");
-    this.$store.dispatch("getPopularMusic");
-    this.$store.dispatch("getLatestMovie");
-    this.$store.dispatch("getLatestSeries");
-    this.$store.dispatch("getPopularVideo");
-  },
+
   computed: {
     ...mapState([
       "latestMusic",
       "latestMovies",
       "latestSeries",
       "popularMusic",
-      "popularVideo"
     ]),
   },
 };

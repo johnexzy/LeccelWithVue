@@ -1,9 +1,11 @@
 <template>
   <div class="row">
     <div class="col-lg-4 grid-margin stretch-card">
-      <div class="card shadow-lg" style="border-radius: 0">
+      <div 
+        class="card shadow-lg" 
+        style="border-radius: 0">
         <div class="card-header font-weight-bold">
-          <i class="mdi mdi-trending-up"></i> Trending Music
+          <i class="mdi mdi-trending-up"/> Trending Music
         </div>
         <div class="card-body">
           <router-link
@@ -17,14 +19,14 @@
               class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
               style="cursor: pointer"
             >
-              <i class="mdi mdi-star-circle text-danger"></i>
+              <i class="mdi mdi-star-circle text-danger"/>
               <h4 class="d-inline font-weight-200 mb-0">
                 <img
                   :src="pmusic.images[0]"
                   style="width: 60px; height: 60px"
                   alt=""
                   class="card-img d-inline"
-                />
+                >
               </h4>
               <p class="d-inline ml-1 font-weight-bold text-primary">
                 {{ pmusic.music_name }}
@@ -35,7 +37,9 @@
       </div>
     </div>
 
-    <div class="col-lg-8 grid-margin" data-aos="fade-down">
+    <div 
+      class="col-lg-8 grid-margin" 
+      data-aos="fade-down">
       <div class="card card-square">
         <div class="card-header">
           <div class="d-flex justify-content-between align-items-center">
@@ -67,7 +71,7 @@
                   style="width: 60px; height: 60px"
                   alt=""
                   class="card-img d-inline"
-                />
+                >
               </h4>
               <h4 class="d-inline ml-1 font-weight-bold text-primary">
                 (MP3) - {{ lmusic.music_name }}
@@ -82,7 +86,7 @@
 
 <script>
 export default {
-  name: "musicIndex",
+  name: "MusicIndex",
   props: {
     latestMusic: {
       required: true,
