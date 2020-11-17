@@ -11,7 +11,7 @@ var sourcemaps = require("gulp-sourcemaps");
 var concat = require("gulp-concat");
 var merge = require("merge-stream");
 
-gulp.task("sass", function() {
+gulp.task("sass", function () {
   return gulp
     .src("./public/assets/scss/style.scss")
     .pipe(sourcemaps.init())
@@ -24,7 +24,7 @@ gulp.task("sass", function() {
 // Static Server + watching scss/html files
 gulp.task(
   "serve",
-  gulp.series("sass", function() {
+  gulp.series("sass", function () {
     browserSync.init({
       port: 3301,
       server: "./dist",
@@ -40,17 +40,17 @@ gulp.task(
 
 /* inject partials like navbar and footer */
 gulp.task('injectPartial', function () {
-  var injPartial1 =  gulp.src("./pages/**/*.html", { base: "../" })
+  var injPartial1 = gulp.src("./pages/**/*.html", { base: "../" })
     .pipe(injectPartials())
     .pipe(gulp.dest("."));
-  var injPartial2 =  gulp.src("./*.html", { base: "./" })
+  var injPartial2 = gulp.src("./*.html", { base: "./" })
     .pipe(injectPartials())
     .pipe(gulp.dest("."));
   return merge(injPartial1, injPartial2);
 });
 
 /* inject Js and CCS assets into HTML */
-gulp.task("injectCommonAssets", function() {
+gulp.task("injectCommonAssets", function () {
   return gulp
     .src("./**/*.html")
     .pipe(
@@ -66,7 +66,7 @@ gulp.task("injectCommonAssets", function() {
 });
 
 /*replace image path and linking after injection*/
-gulp.task("replacePath", function() {
+gulp.task("replacePath", function () {
   return gulp
     .src(["./pages/*.html"], { base: "./" })
     .pipe(replace('src="assets/images', 'src="../public/assets/images'))
@@ -81,12 +81,12 @@ gulp.task(
   gulp.series("injectPartial", "injectCommonAssets", "replacePath")
 );
 
-gulp.task("clean:vendors", function() {
+gulp.task("clean:vendors", function () {
   return del(["vendors/**/*"]);
 });
 
 /*Building vendor scripts needed for basic template rendering*/
-gulp.task("buildBaseVendorScripts", function() {
+gulp.task("buildBaseVendorScripts", function () {
   return gulp
     .src([
       "./node_modules/jquery/dist/jquery.min.js",
@@ -98,7 +98,7 @@ gulp.task("buildBaseVendorScripts", function() {
 });
 
 /*Scripts for addons*/
-gulp.task("copyAddonsScripts", function() {
+gulp.task("copyAddonsScripts", function () {
   var aScript1 = gulp
     .src(["./node_modules/aos/dist/aos.js"])
     .pipe(gulp.dest("./public/assets/vendors/aos/dist/aos.js"));
@@ -106,7 +106,7 @@ gulp.task("copyAddonsScripts", function() {
 });
 
 /*Styles for addons*/
-gulp.task("copyAddonsStyles", function() {
+gulp.task("copyAddonsStyles", function () {
   var aStyle1 = gulp
     .src(["./node_modules/@mdi/font/css/materialdesignicons.min.css"])
     .pipe(gulp.dest("./public/assets/vendors/mdi/css"));
@@ -116,7 +116,10 @@ gulp.task("copyAddonsStyles", function() {
   var aStyle3 = gulp
     .src(["./node_modules/aos/dist/aos.css"])
     .pipe(gulp.dest("./public/assets/vendors/aos/dist/aos.css"));
-  return merge(aStyle1, aStyle2, aStyle3);
+  var sStyle3 = gulp
+    .src(["./node_modules/nprogress/nprogress.css"])
+    .pipe(gulp.dest("./public/assets/vendors/nprogress/nprogress.css"))
+  return merge(aStyle1, aStyle2, aStyle3, sStyle3);
 });
 
 /*sequence for building vendor scripts and styles*/
