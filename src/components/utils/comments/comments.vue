@@ -117,12 +117,13 @@ export default {
   props: {
     commentKey: {
       required: true,
-      default: "kjkjbljkbljbljkb",
+      default: "",
       type: String
     },
     // eslint-disable-next-line vue/require-default-prop
     comments:{
-        type: Array
+        type: Array,
+        default: () => []
     }
   },
   data() {

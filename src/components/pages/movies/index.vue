@@ -255,8 +255,6 @@ export default {
     },
   },
   beforeMount() {
-    // window.scrollTo()
-    this.$store.dispatch("getPopularVideo");
     this.makeReq("+ 1");
   },
 };

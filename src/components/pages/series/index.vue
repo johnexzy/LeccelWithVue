@@ -7,28 +7,52 @@
           <h3 class="font-weight-600 mb-4 text-center">Searching Made Easy</h3>
         </div>
         <div class="card-body">
-          <div 
-            class="form-group" 
-            data-aos="fade-down">
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control searchInput border-info shadow-inset"
-                style="height: 60px; line-height: normal; font-size: large"
-                placeholder="Search here"
+          <ValidationObserver v-slot="{ passes }">
+            <form @submit.prevent="passes(changeRoute)">
+              <div 
+                class="form-group" 
+                data-aos="fade-down">
+                <ValidationProvider
+                  name="search"
+                  rules="maxlength"
+                  v-slot="{ errors }"
+                >
+                  <div class="input-group">
+                    <input
+                      v-model="query"
+                      type="text"
+                      class="form-control searchInput border-info shadow-inset"
+                      style="
+                        height: 60px;
+                        line-height: normal;
+                        font-size: large;
+                      "
+                      placeholder="Search here"
+                    >
+                  </div>
+                  <div
+                    class="alert alert-danger mr-3 fs-12 p-0"
+                    v-for="(datum, i) in errors"
+                    :key="i"
+                  >
+                    <i>{{ datum }}</i>
+                  </div>
+                </ValidationProvider>
+                <div class="mt-3" />
+              </div>
+              <div class="border-bottom shadow" />
+              <div
+                class="d-flex justify-content-center align-content-center mt-2"
               >
-            </div>
-            <div class="mt-3 fs-14"/>
-          </div>
-          <div class="border-bottom shadow"/>
-          <div class="d-flex justify-content-center align-content-center mt-2">
-            <button
-              class="btn btn-lg btn-info btn-icon-text searchButton text-center shadow"
-              type="button"
-            >
-              <i class="mdi mdi-search-web"/>
-            </button>
-          </div>
+                <button
+                  class="btn btn-lg btn-info btn-icon-text searchButton text-center shadow"
+                  type="submit"
+                >
+                  <i class="mdi mdi-search-web" />
+                </button>
+              </div>
+            </form>
+          </ValidationObserver>
         </div>
       </div>
       <div 
@@ -246,8 +270,17 @@
 import { mapState } from "vuex";
 import { api } from "@/config/config";
 import { formatSeries } from "@/helpers/ArrayFormatter";
+import { ValidationProvider, extend, ValidationObserver } from "vee-validate";
+extend("maxlength", {
+  validate: (v) => v.length > 3,
+  message: "search value too small",
+});
 export default {
   name: "AllSeries",
+  components:{
+    ValidationObserver,
+    ValidationProvider
+  },
   data() {
     return {
       loading: true,
@@ -255,6 +288,7 @@ export default {
       current_page: 0,
       total_pages: 1,
       isLastPage: false,
+      query : ''
     };
   },
   computed: {
@@ -275,14 +309,15 @@ export default {
           this.loading = false;
         });
     },
+    changeRoute() {
+      this.$router.push(`/search/series/${encodeURI(this.query)}`)
+    },
     formatDate(c) {
       let ss = new Date(Date.parse(c));
       return ss.toLocaleDateString();
     },
   },
   beforeMount() {
-    // window.scrollTo()
-    this.$store.dispatch("getPopularSeries");
     this.makeReq("+ 1");
   },
 };

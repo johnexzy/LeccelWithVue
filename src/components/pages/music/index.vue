@@ -7,46 +7,52 @@
           <h3 class="font-weight-600 mb-4 text-center">Searching Made Easy</h3>
         </div>
         <div class="card-body">
-          <div 
-            class="form-group" 
-            data-aos="fade-down">
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control searchInput border-info shadow-inset"
-                style="height: 60px; line-height: normal; font-size: large"
-                placeholder="Search here"
+          <ValidationObserver v-slot="{ passes }">
+            <form @submit.prevent="passes(changeRoute)">
+              <div 
+                class="form-group" 
+                data-aos="fade-down">
+                <ValidationProvider
+                  name="search"
+                  rules="maxlength"
+                  v-slot="{ errors }"
+                >
+                  <div class="input-group">
+                    <input
+                      v-model="query"
+                      type="text"
+                      class="form-control searchInput border-info shadow-inset"
+                      style="
+                        height: 60px;
+                        line-height: normal;
+                        font-size: large;
+                      "
+                      placeholder="Search here"
+                    >
+                  </div>
+                  <div
+                    class="alert alert-danger mr-3 fs-12 p-0"
+                    v-for="(datum, i) in errors"
+                    :key="i"
+                  >
+                    <i>{{ datum }}</i>
+                  </div>
+                </ValidationProvider>
+                <div class="mt-3" />
+              </div>
+              <div class="border-bottom shadow" />
+              <div
+                class="d-flex justify-content-center align-content-center mt-2"
               >
-            </div>
-            <div class="mt-3 fs-14">
-              Search Music In: &nbsp; &nbsp;
-              <div class="mt-2">
-                <input 
-                  type="checkbox" 
-                  name="artist" 
-                  id="artist" 
-                  checked >
-                <label for="artist">Artists</label> &nbsp;&nbsp;
+                <button
+                  class="btn btn-lg btn-info btn-icon-text searchButton text-center shadow"
+                  type="submit"
+                >
+                  <i class="mdi mdi-search-web" />
+                </button>
               </div>
-              <div>
-                <input 
-                  type="checkbox" 
-                  name="artist" 
-                  id="artist" 
-                  checked >
-                <label for="artist">Music Name</label> &nbsp;&nbsp;
-              </div>
-            </div>
-          </div>
-          <div class="border-bottom shadow"/>
-          <div class="d-flex justify-content-center align-content-center mt-2">
-            <button
-              class="btn btn-lg btn-info btn-icon-text searchButton text-center shadow"
-              type="button"
-            >
-              <i class="mdi mdi-search-web"/>
-            </button>
-          </div>
+            </form>
+          </ValidationObserver>
         </div>
       </div>
       <div 
@@ -129,19 +135,16 @@
                       class="col-md-4 grid-margin stretch-card"
                     >
                       <div class="card card-rounded shadow music">
-                        
                         <div class="card-img-holder">
-                          <img
-                            :src="music.images[0]"
-                            alt=""
-                            class="card-img"
-                          >
+                          <img 
+                            :src="music.images[0]" 
+                            alt="" 
+                            class="card-img" >
                         </div>
 
                         <div 
                           class="card-body p-2" 
                           style="background: #eee">
-                          
                           <h3
                             class="font-weight-200 mb-2"
                             style="color: #561529"
@@ -150,7 +153,7 @@
                           </h3>
                           <div class="d-flex justify-content-between">
                             <p class="d-inline L5 mb-0">
-                              <i class="mdi mdi-artist"/>
+                              <i class="mdi mdi-artist" />
                               <router-link
                                 :to="`/search/music/${music.artist}`"
                                 class="fs-15 text-muted text-decoration-none"
@@ -159,14 +162,13 @@
                               </router-link>
                             </p>
                             <p class="d-inline mb-0">
-                              <i class="mdi mdi-comment"/>({{
+                              <i class="mdi mdi-comment" />({{
                                 music.comments.length
                               }})
                             </p>
                           </div>
                         </div>
                       </div>
-
                     </router-link>
                   </div>
                 </div>
@@ -185,7 +187,7 @@
                     value="" 
                     type="hidden" >
                   <a class="page-link">
-                    <i class="mdi mdi-arrow-left-bold"/>
+                    <i class="mdi mdi-arrow-left-bold" />
                   </a>
                 </li>
 
@@ -197,7 +199,7 @@
                     value="" 
                     type="hidden" >
                   <a class="page-link">
-                    <i class="mdi mdi-arrow-right-bold"/>
+                    <i class="mdi mdi-arrow-right-bold" />
                   </a>
                 </li>
               </ul>
@@ -216,8 +218,17 @@
 import { mapState } from "vuex";
 import { api } from "@/config/config";
 import { formatMusic } from "@/helpers/ArrayFormatter";
+import { ValidationProvider, extend, ValidationObserver } from "vee-validate";
+extend("maxlength", {
+  validate: (v) => v.length > 3,
+  message: "search value too small",
+});
 export default {
   name: "Allmusic",
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   data() {
     return {
       loading: true,
@@ -225,6 +236,7 @@ export default {
       current_page: 0,
       total_pages: 1,
       isLastPage: false,
+      query: ''
     };
   },
   computed: {
@@ -245,13 +257,15 @@ export default {
           this.loading = false;
         });
     },
+    changeRoute() {
+      this.$router.push(`/search/music/${encodeURI(this.query)}`)
+    },
     formatDate(c) {
       let ss = new Date(Date.parse(c));
       return ss.toLocaleDateString();
     },
   },
   beforeMount() {
-    this.$store.dispatch("getPopularMusic");
     this.makeReq("+ 1");
   },
 };
