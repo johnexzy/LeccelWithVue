@@ -65,7 +65,9 @@
             <hr >
           </div>
         </div>
-        <div class="d-block mb-4 mt-4 text-center">
+        <div 
+          v-if="rmovieCount > 0"
+          class="d-block mb-4 mt-4 text-center">
           <h3>You may also like:</h3>
         </div>
         <div class="row show-video">
@@ -133,6 +135,7 @@ export default {
     return {
       videoObj: {},
       relatedvideoArr: [],
+      rmovieCount: 0,
       state: false,
     };
   },
@@ -168,6 +171,7 @@ export default {
             this.relatedvideoArr = resp.data.data[1].data.filter(
               (val, i) => val.id !== this.videoObj.id && i < 8
             );
+            this.rmovieCount = this.relatedvideoArr.length
           });
           this.state = true
         });

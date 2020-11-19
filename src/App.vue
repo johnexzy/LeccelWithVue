@@ -12,7 +12,8 @@
     <div class="d-flex align-items-center justify-content-center pad2x">
       <p class="mt-2">
         <router-link to="/aboutus">About Us </router-link> |
-        <router-link to="/contactus">Contact Us</router-link>
+        <router-link to="/contactus">Contact Us</router-link> | 
+        <router-link to="/privacy">Privacy Policy</router-link>
       </p>
     </div>
     <Footer />

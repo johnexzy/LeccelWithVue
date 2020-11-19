@@ -63,6 +63,10 @@ export default new Router({
         path: '/contactus',
         name: 'contact',
         component: () => import('@/components/pages/contactus.vue')
+    },{
+        path: '/privacy',
+        name: 'privacy',
+        component: () => import('@/components/pages/privacy.vue')
     },
     {
         path: '/search/:group/:query',
