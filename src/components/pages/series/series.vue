@@ -27,17 +27,21 @@
                         :src="lseries.images[0]"
                         alt=""
                         class="card-img"
-                      />
+                      >
                     </div>
                   </router-link>
 
-                  <div class="card-body p-2" style="background: #eee">
+                  <div 
+                    class="card-body p-2" 
+                    style="background: #eee">
                     <router-link
                       :to="`/series/${lseries.short_url}`"
                       class="h3 mb-0"
                       style="text-decoration: none; color: inherit"
                     >
-                      <h3 class="font-weight-200 mb-2" style="color: #561529">
+                      <h3 
+                        class="font-weight-200 mb-2" 
+                        style="color: #561529">
                         (Download) - {{ lseries.series_name }}
                       </h3>
                     </router-link>
@@ -54,7 +58,7 @@
 
 <script>
 export default {
-  name: "seriesIndex",
+  name: "SeriesIndex",
   props: {
     latestSeries: {
       type: Array,

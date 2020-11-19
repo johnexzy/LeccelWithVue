@@ -61,7 +61,9 @@
             <hr >
           </div>
         </div>
-        <div class="d-block mb-4 mt-4 text-center">
+        <div
+          v-if="popularSeries.length > 0"
+          class="d-block mb-4 mt-4 text-center">
           <h3>You may also like:</h3>
         </div>
         <div class="row show-series">
@@ -105,16 +107,20 @@
 
 <script>
 import { api, Api_Base } from "@/config/config.js";
-import { formatSeries } from "@/helpers/ArrayFormatter";
 import timeago from "timeago-simple";
+import { mapState } from "vuex";
 export default {
   name: "ViewSeries",
   data() {
     return {
       seriesObj: {},
       relatedseriesArr: [],
+      rseriesCount: 0,
       state: false,
     };
+  },
+  computed:{
+    ...mapState(['popularSeries'])
   },
   mounted() {
     this.init();
@@ -143,15 +149,8 @@ export default {
           }));
 
           //related series Obj fires when {this.seriesObj} is updated
-          api
-            .get(`/api/v1/search/${this.seriesObj.series_name}`)
-            .then((resp) => {
-              //removes the current series from relatedseriesArray
-              this.relatedseriesArr = formatSeries(
-                resp.data.data[2].data
-              ).filter((val) => val.id !== this.seriesObj.id);
-            });
-            this.state = true
+          this.relatedseriesArr = this.popularSeries.filter((val) => val.id !== this.seriesObj.id);
+          this.state = true
         });
     },
   },

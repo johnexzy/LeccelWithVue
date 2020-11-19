@@ -75,7 +75,9 @@
             <hr >
           </div>
         </div>
-        <div class="d-block mb-4 mt-4 text-center">
+        <div 
+          v-if="rmusicCount > 0" 
+          class="d-block mb-4 mt-4 text-center">
           <h3>You may also like:</h3>
         </div>
         <div class="row show-music">
@@ -127,6 +129,7 @@ export default {
     return {
       musicObj: {},
       relatedmusicArr: [],
+      rmusicCount: 0,
       state: false,
     };
   },
@@ -163,7 +166,8 @@ export default {
               //removes the current music from relatedmusicArray
               this.relatedmusicArr = formatMusic(
                 resp.data.data[0].data
-              ).filter((val) => val.id !== this.musicObj.id);
+              ).filter((val, i) => val.id !== this.musicObj.id && i < 8);
+              this.rmusicCount = this.relatedmusicArr.length
             });
             this.state = true
         });
