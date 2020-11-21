@@ -69,10 +69,7 @@
                   <i class="mdi mdi-24px mdi-twitter"/>
                   <span class="text-muted display-4">@leccelj</span>
                 </div>
-                <div>
-                  <i class="mdi mdi-24px mdi-instagram"/>
-                  <span class="text-muted display-4">leccel_net</span>
-                </div>
+                
               </div>
             </div>
           </div>

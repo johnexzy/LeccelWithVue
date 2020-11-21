@@ -8,6 +8,7 @@ import comment from "@/components/utils/comments/comments.vue";
 
 import carouselImg from "@/components/utils/carousel/carouselImage.vue";
 import share from "@/components/utils/share/share.vue";
+import './registerServiceWorker'
 Vue.use(VueMeta)
 Vue.config.productionTip = true;
 
