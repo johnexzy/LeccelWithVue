@@ -11,7 +11,7 @@
         data-target="#carouselExampleIndicators"
         :data-slide-to="i"
         :class="i == 0 ? 'active' : ''"
-      ></li>
+      />
     </ol>
     <div class="carousel-inner">
       <div
@@ -23,7 +23,7 @@
           class="d-block w-100"
           :src="image | formatSrc"
           :alt="`slide ${i}`"
-        />
+        >
       </div>
     </div>
 
@@ -33,7 +33,9 @@
       role="button"
       data-slide="prev"
     >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span 
+        class="carousel-control-prev-icon" 
+        aria-hidden="true"/>
       <span class="sr-only">Previous</span>
     </a>
     <a
@@ -42,7 +44,9 @@
       role="button"
       data-slide="next"
     >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span 
+        class="carousel-control-next-icon" 
+        aria-hidden="true"/>
       <span class="sr-only">Next</span>
     </a>
   </div>
@@ -50,9 +54,12 @@
 <script>
 import { Api_Base } from "@/config/config.js"
 export default {
-  name: "carouselImg",
+  name: "CarouselImg",
   props: {
-    images: Array,
+    images: {
+      type: Array,
+      default: () => []
+    }
   },
   filters: {
     formatSrc(link) {
