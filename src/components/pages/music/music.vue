@@ -19,7 +19,7 @@
               class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
               style="cursor: pointer"
             >
-              <i class="mdi mdi-star-circle text-danger"/>
+              <!-- <i class="mdi mdi-star-circle text-danger"/> -->
               <h4 class="d-inline font-weight-200 mb-0">
                 <img
                   :src="pmusic.images[0]"

@@ -1,17 +1,20 @@
 <template>
-  <div class="container">
-    <music-index 
-      :latest-music="latestMusic" 
-      :popular-music="popularMusic" />
-    <div 
-      class="row" 
-      data-aos="fade-right">
-      <movies-index :latest-movies="latestMovies" />
-    </div>
-    <div 
-      class="row" 
-      data-aos="fade-up">
-      <series-index :latest-series="latestSeries" />
+  <div class="content-wrapper">
+
+    <div class="container">
+      <music-index 
+        :latest-music="latestMusic" 
+        :popular-music="popularMusic" />
+      <div 
+        class="row" 
+        data-aos="fade-right">
+        <movies-index :latest-movies="latestMovies" />
+      </div>
+      <div 
+        class="row" 
+        data-aos="fade-up">
+        <series-index :latest-series="latestSeries" />
+      </div>
     </div>
   </div>
 </template>

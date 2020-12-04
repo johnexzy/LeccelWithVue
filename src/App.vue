@@ -4,9 +4,7 @@
     <div class="container-scroller">
       <div class="main-panel">
         <NavBar />
-        <div class="content-wrapper">
-          <router-view />
-        </div>
+        <router-view />
       </div>
     </div>
     <div class="d-flex align-items-center justify-content-center pad2x">

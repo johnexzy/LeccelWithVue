@@ -1,193 +1,195 @@
 <template>
-  <div class="container">
-    <div class="col-sm-12">
-      <div class="mb-3 text-light">
-        <a
-          href="/"
-          class="mb-1 font-weight-bold pad2x text-decoration-none text-light"
-        >Home</a
-        >
-        &RightArrow;
-        <a
-          href="#"
-          class="mb-1 font-weight-bold pad2x text-decoration-none text-light"
-        >Search Result for ({{ query }})
-        </a>
+  <div class="content-wrapper">
+    <div class="container">
+      <div class="col-sm-12">
+        <div class="mb-3 text-light">
+          <a
+            href="/"
+            class="mb-1 font-weight-bold pad2x text-decoration-none text-light"
+          >Home</a
+          >
+          &RightArrow;
+          <a
+            href="#"
+            class="mb-1 font-weight-bold pad2x text-decoration-none text-light"
+          >Search Result for ({{ query }})
+          </a>
+        </div>
       </div>
-    </div>
-    <div v-show="!state">
-      <div class="d-flex justify-content-center">
-        <img 
-          src="/assets/images/loader.gif" 
-          alt="" >
+      <div v-show="!state">
+        <div class="d-flex justify-content-center">
+          <img 
+            src="/assets/images/loader.gif" 
+            alt="" >
+        </div>
       </div>
-    </div>
-    <div 
-      v-show="state" 
-      class="row">
-      <div class="col-md-12 grid-margin stretch-card">
-        <div class="card card-square">
-          <div class="card-body dashboard-tabs p-0">
-            <ul 
-              class="nav nav-tabs" 
-              role="tablist">
-              <li class="nav-item">
-                <a
-                  :class="`nav-link ${checkGroup('music') ? 'active' : ''}`"
-                  id="overview-tab"
-                  data-toggle="tab"
-                  href="#music"
-                  role="tab"
-                  aria-controls="music"
-                  :aria-selected="checkGroup('music')"
-                >🎧
-                  <sup 
-                    style="color: #cc0303; font-weight: bolder"
-                  >({{ musicSearch.length }})</sup
-                ></a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  :class="`nav-link ${checkGroup('movies') ? 'active' : ''}`"
-                  id="sales-tab"
-                  data-toggle="tab"
-                  href="#movies"
-                  role="tab"
-                  aria-controls="movies"
-                  :aria-selected="checkGroup('movies')"
-                >🎬
-                  <sup 
-                    style="color: #cc0303; font-weight: bolder"
-                  >({{ videoSearch.length }})</sup
-                ></a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  :class="`nav-link ${checkGroup('series') ? 'active' : ''}`"
-                  id="purchases-tab"
-                  data-toggle="tab"
-                  href="#series"
-                  role="tab"
-                  aria-controls="series"
-                  :aria-selected="checkGroup('series')"
-                >📺
-                  <sup 
-                    style="color: #cc0303; font-weight: bolder"
-                  >({{ seriesSearch.length }})</sup
-                ></a
-                >
-              </li>
-            </ul>
-            <div class="tab-content py-3 px-5">
-              <div
-                :class="`tab-pane fade show ${
-                  checkGroup('music') ? 'active' : ''
-                }`"
-                id="music"
-                role="tabpanel"
-                aria-labelledby="music-tab"
-              >
-                <router-link
-                  v-for="(m, i) in musicSearch"
-                  :key="i"
-                  class="h3 font-weight-200 mb-1"
-                  :to="`/music/${m.short_url}`"
-                  style="text-decoration: none; color: inherit"
-                >
-                  <div
-                    class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
-                    style="cursor: pointer"
+      <div 
+        v-show="state" 
+        class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+          <div class="card card-square">
+            <div class="card-body dashboard-tabs p-0">
+              <ul 
+                class="nav nav-tabs" 
+                role="tablist">
+                <li class="nav-item">
+                  <a
+                    :class="`nav-link ${checkGroup('music') ? 'active' : ''}`"
+                    id="overview-tab"
+                    data-toggle="tab"
+                    href="#music"
+                    role="tab"
+                    aria-controls="music"
+                    :aria-selected="checkGroup('music')"
+                  >🎧
+                    <sup 
+                      style="color: #cc0303; font-weight: bolder"
+                    >({{ musicSearch.length }})</sup
+                  ></a
                   >
-                    <h4 class="d-inline font-weight-200 mb-0">
-                      <img
-                        :src="m.images[0] | formatSrc"
-                        style="width: 60px; height: 60px"
-                        alt=""
-                        class="card-img d-inline"
-                      >
-                    </h4>
-                    <h4 class="d-inline ml-3 font-weight-bold text-primary">
-                      {{ m.music_name }}
-                      <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
-                        uploaded on {{ formatDate(m.created_at) }}
-                      </p>
-                    </h4>
-                  </div>
-                </router-link>
-              </div>
-              <div
-                :class="`tab-pane fade show ${
-                  checkGroup('movies') ? 'active' : ''
-                }`"
-                id="movies"
-                role="tabpanel"
-                aria-labelledby="movies-tab"
-              >
-                <router-link
-                  v-for="(v, i) in videoSearch"
-                  :key="i"
-                  class="h3 font-weight-200 mb-1"
-                  :to="`/video/${v.short_url}`"
-                  tag="div"
-                >
-                  <div
-                    class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
-                    style="cursor: pointer"
+                </li>
+                <li class="nav-item">
+                  <a
+                    :class="`nav-link ${checkGroup('movies') ? 'active' : ''}`"
+                    id="sales-tab"
+                    data-toggle="tab"
+                    href="#movies"
+                    role="tab"
+                    aria-controls="movies"
+                    :aria-selected="checkGroup('movies')"
+                  >🎬
+                    <sup 
+                      style="color: #cc0303; font-weight: bolder"
+                    >({{ videoSearch.length }})</sup
+                  ></a
                   >
-                    <h4 class="d-inline font-weight-200 mb-0">
-                      <img
-                        :src="v.images[0] | formatSrc"
-                        style="width: 60px; height: 60px"
-                        alt=""
-                        class="card-img d-inline"
-                      >
-                    </h4>
-                    <h4 class="d-inline ml-3 font-weight-bold text-primary">
-                      {{ v.video_name }}
-                      <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
-                        uploaded on {{ formatDate(v.created_at) }}
-                      </p>
-                    </h4>
-                  </div>
-                </router-link>
-              </div>
-              <div
-                :class="`tab-pane fade show ${
-                  checkGroup('series') ? 'active' : ''
-                }`"
-                id="series"
-                role="tabpanel"
-                aria-labelledby="series-tab"
-              >
-                <router-link
-                  v-for="(s, i) in seriesSearch"
-                  :key="i"
-                  class="h3 font-weight-200 mb-1"
-                  :to="`/series/${s.short_url}`"
-                  style="text-decoration: none; color: inherit"
-                >
-                  <div
-                    class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
-                    style="cursor: pointer"
+                </li>
+                <li class="nav-item">
+                  <a
+                    :class="`nav-link ${checkGroup('series') ? 'active' : ''}`"
+                    id="purchases-tab"
+                    data-toggle="tab"
+                    href="#series"
+                    role="tab"
+                    aria-controls="series"
+                    :aria-selected="checkGroup('series')"
+                  >📺
+                    <sup 
+                      style="color: #cc0303; font-weight: bolder"
+                    >({{ seriesSearch.length }})</sup
+                  ></a
                   >
-                    <h4 class="d-inline font-weight-200 mb-0">
-                      <img
-                        :src="s.images[0] | formatSrc"
-                        style="width: 60px; height: 60px"
-                        alt=""
-                        class="card-img d-inline"
-                      >
-                    </h4>
-                    <h4 class="d-inline ml-2 font-weight-bold text-primary">
-                      {{ s.series_name }}
-                      <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
-                        uploaded on {{ formatDate(s.created_at) }}
-                      </p>
-                    </h4>
-                  </div>
-                </router-link>
+                </li>
+              </ul>
+              <div class="tab-content py-3 px-5">
+                <div
+                  :class="`tab-pane fade show ${
+                    checkGroup('music') ? 'active' : ''
+                  }`"
+                  id="music"
+                  role="tabpanel"
+                  aria-labelledby="music-tab"
+                >
+                  <router-link
+                    v-for="(m, i) in musicSearch"
+                    :key="i"
+                    class="h3 font-weight-200 mb-1"
+                    :to="`/music/${m.short_url}`"
+                    style="text-decoration: none; color: inherit"
+                  >
+                    <div
+                      class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
+                      style="cursor: pointer"
+                    >
+                      <h4 class="d-inline font-weight-200 mb-0">
+                        <img
+                          :src="m.images[0] | formatSrc"
+                          style="width: 60px; height: 60px"
+                          alt=""
+                          class="card-img d-inline"
+                        >
+                      </h4>
+                      <h4 class="d-inline ml-3 font-weight-bold text-primary">
+                        {{ m.music_name }}
+                        <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
+                          uploaded on {{ formatDate(m.created_at) }}
+                        </p>
+                      </h4>
+                    </div>
+                  </router-link>
+                </div>
+                <div
+                  :class="`tab-pane fade show ${
+                    checkGroup('movies') ? 'active' : ''
+                  }`"
+                  id="movies"
+                  role="tabpanel"
+                  aria-labelledby="movies-tab"
+                >
+                  <router-link
+                    v-for="(v, i) in videoSearch"
+                    :key="i"
+                    class="h3 font-weight-200 mb-1"
+                    :to="`/video/${v.short_url}`"
+                    tag="div"
+                  >
+                    <div
+                      class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
+                      style="cursor: pointer"
+                    >
+                      <h4 class="d-inline font-weight-200 mb-0">
+                        <img
+                          :src="v.images[0] | formatSrc"
+                          style="width: 60px; height: 60px"
+                          alt=""
+                          class="card-img d-inline"
+                        >
+                      </h4>
+                      <h4 class="d-inline ml-3 font-weight-bold text-primary">
+                        {{ v.video_name }}
+                        <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
+                          uploaded on {{ formatDate(v.created_at) }}
+                        </p>
+                      </h4>
+                    </div>
+                  </router-link>
+                </div>
+                <div
+                  :class="`tab-pane fade show ${
+                    checkGroup('series') ? 'active' : ''
+                  }`"
+                  id="series"
+                  role="tabpanel"
+                  aria-labelledby="series-tab"
+                >
+                  <router-link
+                    v-for="(s, i) in seriesSearch"
+                    :key="i"
+                    class="h3 font-weight-200 mb-1"
+                    :to="`/series/${s.short_url}`"
+                    style="text-decoration: none; color: inherit"
+                  >
+                    <div
+                      class="d-flex justify-content-start border-bottom mt-2 mb-2 shadow"
+                      style="cursor: pointer"
+                    >
+                      <h4 class="d-inline font-weight-200 mb-0">
+                        <img
+                          :src="s.images[0] | formatSrc"
+                          style="width: 60px; height: 60px"
+                          alt=""
+                          class="card-img d-inline"
+                        >
+                      </h4>
+                      <h4 class="d-inline ml-2 font-weight-bold text-primary">
+                        {{ s.series_name }}
+                        <p style="color: rgb(175 175 175 / 88%); font-size: 15px">
+                          uploaded on {{ formatDate(s.created_at) }}
+                        </p>
+                      </h4>
+                    </div>
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
