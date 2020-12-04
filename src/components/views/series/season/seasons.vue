@@ -1,66 +1,69 @@
 <template>
-  <div class="container">
-    <div 
-      v-show="!state">
-      <div class="d-flex justify-content-center">
-        <img 
-          src="/assets/images/loader.gif" 
-          alt="" >
-      </div>
-    </div>
-    <div 
-      v-show="state"
-      class="card card-square">
-      <!-- {{ seasonObj.series_name }} -->
-      <div class="card-header">
-        <p 
-          class="font-weight-bold" 
-          style="text-align: center">
-          {{ seasonObj.series_name }} - {{ seasonObj.season_name }}
-        </p>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-sm-6">
-            <b
-            >Download {{ seasonObj.series_name }}:
-              {{ seasonObj.season_name }}</b
-              >
+  <div class="content-wrapper">
 
-            <hr >
-            <router-link
-              v-for="(ep, i) in seasonObj.episodes"
-              :key="i"
-              tag="div"
-              :to="`/episode/${seasonObj.series_name}/${ep.short_url}`"
-            >
-              <div
-                class="d-flex justify-content-start border-bottom py-3 shadow"
-                style="cursor: pointer"
-              >
-                <h4 class="d-inline ml-1 font-weight-bold text-primary">
-                  {{ ep.ep_name }}
-                </h4>
-              </div>
-            </router-link>
-          </div>
+    <div class="container">
+      <div 
+        v-show="!state">
+        <div class="d-flex justify-content-center">
+          <img 
+            src="/assets/images/loader.gif" 
+            alt="" >
         </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <hr >
-            <share
-              :phead="seasonObj.series_name"
-              :pbody="seasonObj.season_name"
-            />
-            <hr >
-          </div>
+      </div>
+      <div 
+        v-show="state"
+        class="card card-square">
+        <!-- {{ seasonObj.series_name }} -->
+        <div class="card-header">
+          <p 
+            class="font-weight-bold" 
+            style="text-align: center">
+            {{ seasonObj.series_name }} - {{ seasonObj.season_name }}
+          </p>
         </div>
-        <div class="mt-3"/>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <b
+              >Download {{ seasonObj.series_name }}:
+                {{ seasonObj.season_name }}</b
+                >
 
-        <comment
-          :comment-key="seasonObj.season_key"
-          :comments="seasonObj.comments"
-        />
+              <hr >
+              <router-link
+                v-for="(ep, i) in seasonObj.episodes"
+                :key="i"
+                tag="div"
+                :to="`/episode/${seasonObj.series_name}/${ep.short_url}`"
+              >
+                <div
+                  class="d-flex justify-content-start border-bottom py-3 shadow"
+                  style="cursor: pointer"
+                >
+                  <h4 class="d-inline ml-1 font-weight-bold text-primary">
+                    {{ ep.ep_name }}
+                  </h4>
+                </div>
+              </router-link>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <hr >
+              <share
+                :phead="seasonObj.series_name"
+                :pbody="seasonObj.season_name"
+              />
+              <hr >
+            </div>
+          </div>
+          <div class="mt-3"/>
+
+          <comment
+            :comment-key="seasonObj.season_key"
+            :comments="seasonObj.comments"
+          />
+        </div>
       </div>
     </div>
   </div>

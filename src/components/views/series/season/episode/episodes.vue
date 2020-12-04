@@ -1,68 +1,71 @@
 
 <template>
-  <div class="container">
-    <div 
-      v-show="!state">
-      <div class="d-flex justify-content-center">
-        <img 
-          src="/assets/images/loader.gif" 
-          alt="" >
+  <div class="content-wrapper">
+
+    <div class="container">
+      <div 
+        v-show="!state">
+        <div class="d-flex justify-content-center">
+          <img 
+            src="/assets/images/loader.gif" 
+            alt="" >
+        </div>
       </div>
-    </div>
-    <div 
-      v-show="state"
-      class="card card-square">
-      <!-- {{ episodeObj.video_name }} -->
-      <div class="card-header">
-        <p 
-          class="font-weight-bold" 
-          style="text-align: center">
-          {{ episodeObj.series_name }}: Episode {{ episodeObj.ep_name.charAt(3) }}
-        </p>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="row">
-              <div class="col-lg-12 mb-5 mb-sm-2">
-                <carousel-img :images="episodeObj.images"/>
+      <div 
+        v-show="state"
+        class="card card-square">
+        <!-- {{ episodeObj.video_name }} -->
+        <div class="card-header">
+          <p 
+            class="font-weight-bold" 
+            style="text-align: center">
+            {{ episodeObj.series_name }}: Episode {{ episodeObj.ep_name.charAt(3) }}
+          </p>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-lg-12 mb-5 mb-sm-2">
+                  <carousel-img :images="episodeObj.images"/>
+                </div>
               </div>
             </div>
+            <div class="col-sm-6">
+              <b>Download Episode {{ episodeObj.ep_name.charAt(3) }}</b>
+              <hr >
+              <p style="line-height: 2.5">{{ episodeObj.ep_details }}</p>
+              <hr >
+              <a
+                :href="episodeObj.videos[0].video_url | formatSrc"
+                class="btn btn-primary btn-lg btn-block"
+                download
+              >
+                Download MP4 ({{
+                  (
+                    Number(episodeObj.videos[0].video_bytes) /
+                    (1024 * 1024)
+                  ).toFixed(2)
+                }}mb)
+              </a>
+            </div>
           </div>
-          <div class="col-sm-6">
-            <b>Download Episode {{ episodeObj.ep_name.charAt(3) }}</b>
-            <hr >
-            <p style="line-height: 2.5">{{ episodeObj.ep_details }}</p>
-            <hr >
-            <a
-              :href="episodeObj.videos[0].video_url | formatSrc"
-              class="btn btn-primary btn-lg btn-block"
-              download
-            >
-              Download MP4 ({{
-                (
-                  Number(episodeObj.videos[0].video_bytes) /
-                  (1024 * 1024)
-                ).toFixed(2)
-              }}mb)
-            </a>
+          <div class="row">
+            <div class="col-sm-12">
+              <hr >
+              <share 
+                :phead="episodeObj.ep_name" 
+                :pbody="episodeObj.ep_details"/>
+              <hr >
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <hr >
-            <share 
-              :phead="episodeObj.ep_name" 
-              :pbody="episodeObj.ep_details"/>
-            <hr >
-          </div>
-        </div>
-        <div class="mt-3"/>
+          <div class="mt-3"/>
 
-        <comment
-          :comment-key="episodeObj.video_key"
-          :comments="episodeObj.comments"
-        />
+          <comment
+            :comment-key="episodeObj.video_key"
+            :comments="episodeObj.comments"
+          />
+        </div>
       </div>
     </div>
   </div>
