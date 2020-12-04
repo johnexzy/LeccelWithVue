@@ -1,53 +1,73 @@
 <template>
-  <div class="container">
-    <div 
-      v-show="!state">
-      <div class="d-flex justify-content-center">
-        <img 
-          src="/assets/images/loader.gif" 
-          alt="" >
+  <div class="content-wrapper">
+
+    <div class="container">
+      <div 
+        v-show="!state">
+        <div class="d-flex justify-content-center">
+          <img 
+            src="/assets/images/loader.gif" 
+            alt="" >
+        </div>
       </div>
-    </div>
-    <div 
-      v-show="state"
-      class="card card-square">
-      <!-- {{ musicObj.music_name }} -->
-      <div class="card-header">
-        <p 
-          class="font-weight-bold" 
-          style="text-align: center">
-          {{ musicObj.music_name }}
-        </p>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="row">
-              <div class="col-lg-12 mb-5 mb-sm-2">
-                <carousel-img :images="musicObj.images"/>
+      <div 
+        v-show="state"
+        class="card card-square">
+        <!-- {{ musicObj.music_name }} -->
+        <div class="card-header">
+          <p 
+            class="font-weight-bold" 
+            style="text-align: center">
+            {{ musicObj.music_name }}
+          </p>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-lg-12 mb-5 mb-sm-2">
+                  <carousel-img :images="musicObj.images"/>
+                </div>
               </div>
             </div>
+            <div class="col-sm-6">
+              <b>Download {{ musicObj.music_name }} MP3</b>
+              <hr >
+              <p style="line-height: 2.5">{{ musicObj.music_details }}</p>
+              <a
+                v-for="(f, i) in musicObj.audio"
+                :key="i"
+                :href="f.song_url | formatSrc"
+                class="btn btn-primary btn-lg btn-block"
+                download
+              >
+                Download MP3 ({{
+                  (Number(f.song_bytes) / (1024 * 1024)).toFixed(
+                    2
+                  )
+                }}mb)
+              </a>
+            </div>
           </div>
-          <div class="col-sm-6">
-            <b>Download {{ musicObj.music_name }} MP3</b>
-            <hr >
-            <p style="line-height: 2.5">{{ musicObj.music_details }}</p>
-            <a
-              v-for="(f, i) in musicObj.audio"
-              :key="i"
-              :href="f.song_url | formatSrc"
-              class="btn btn-primary btn-lg btn-block"
-              download
-            >
-              Download MP3 ({{
-                (Number(f.song_bytes) / (1024 * 1024)).toFixed(
-                  2
-                )
-              }}mb)
-            </a>
+          <hr>
+          <div class="row mt-3 ">
+            <div class="col-sm-12">
+              <div class="d-flex justify-content-center align-items-center">
+                <aplayer 
+              
+                  autoplay
+                  :music="{
+                    title: musicObj.music_name,
+                    artist: musicObj.artist,
+                    src: meta.audio,
+                    pic: meta.image
+                  }"
+                />
+              </div>
+            
+            </div>
           </div>
-        </div>
-        <!-- <div class="row">
+          <!-- <div class="row">
           <p class="m-4 d-block">PLAY ONLINE?</p>
           <div class="embed-responsive">
             <audio
@@ -64,56 +84,58 @@
             />
           </div>
         </div> -->
-        <div class="row">
-          <div class="col-sm-12">
-            <hr >
-            <share
-              :phead="musicObj.music_name"
-              :pbody="musicObj.music_details"
-            />
+          <div class="row">
+            <div class="col-sm-12">
+              <hr >
+              <share
+                :phead="musicObj.music_name"
+                :pbody="musicObj.music_details"
+              />
 
-            <hr >
-          </div>
-        </div>
-        <div 
-          v-if="rmusicCount > 0" 
-          class="d-block mb-4 mt-4 text-center">
-          <h3>You may also like:</h3>
-        </div>
-        <div class="row show-music">
-          <router-link
-            class="col-md-3 grid-margin stretch-card"
-            v-for="(rmusic, i) in relatedmusicArr"
-            :key="i"
-            :to="`/music/${rmusic.short_url}`"
-            tag="div"
-          >
-            <div class="card card-rounded shadow music">
-              <div class="card-img-holder">
-                <img 
-                  :src="rmusic.images[0]" 
-                  alt="" 
-                  class="card-img" >
-              </div>
-
-              <div 
-                class="card-body p-2" 
-                style="background: #eee">
-                <h3 
-                  class="font-weight-200 mb-2" 
-                  style="color: #561529">
-                  (Download) - {{ rmusic.music_name }}
-                </h3>
-              </div>
+              <hr >
             </div>
-          </router-link>
-        </div>
-        <div class="mt-3"/>
+          </div>
+          <div 
+            v-if="rmusicCount > 0" 
+            class="d-block mb-4 mt-4 text-center">
+            <h3>You may also like:</h3>
+          </div>
+          <div class="row show-music">
+            <router-link
+              class="col-md-3 grid-margin stretch-card"
+              v-for="(rmusic, i) in relatedmusicArr"
+              :key="i"
+              :to="`/music/${rmusic.short_url}`"
+              tag="div"
+            >
+              <div class="card card-rounded shadow music">
+                <div class="card-img-holder">
+                  <img 
+                    :src="rmusic.images[0]" 
+                    alt="" 
+                    class="card-img" >
+                </div>
 
-        <comment
-          :comment-key="musicObj.music_key"
-          :comments="musicObj.comments"
-        />
+                <div 
+                  class="card-body p-2" 
+                  style="background: #eee">
+                  <h3 
+                    class="font-weight-200 mb-2" 
+                    style="color: #561529">
+                    (Download) - {{ rmusic.music_name }}
+                  </h3>
+                </div>
+              </div>
+            </router-link>
+          </div>
+        
+          <div class="mt-3"/>
+
+          <comment
+            :comment-key="musicObj.music_key"
+            :comments="musicObj.comments"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -131,9 +153,16 @@ export default {
       relatedmusicArr: [],
       rmusicCount: 0,
       state: false,
+      currentURL: null,
+      meta: {
+        title: undefined,
+        description: undefined,
+        image: "https://app.leccel.net/uploads/images/20201115134501455222978.jpg",
+        audio: null
+      }
     };
   },
-  mounted() {
+  beforeMount() {
     this.init();
   },
   filters: {
@@ -148,17 +177,23 @@ export default {
   },
   methods: {
     init() {
-      this.state = false
+      this.state = false;
+      this.currentURL = window.location.href;
+
       api
         .get(`/api/v1/music/url/${this.$route.params.short_url}`)
         .then((res) => {
           this.musicObj = res.data;
+          this.meta.image = `${Api_Base}/${this.musicObj.images[0]}`
+          this.meta.audio = `${Api_Base}/${this.musicObj.audio[0].song_url}`
+          this.meta.title = this.musicObj.music_name;
+          this.meta.description = this.musicObj.music_details;
           this.musicObj.comments = this.musicObj.comments.map((x) => ({
             name: x.name,
             comment: x.comment,
             updated_at: timeago.simple(x.updated_at),
           }));
-
+          
           //related music Obj fires when {this.musicObj} is updated
           api
             .get(`/api/v1/search/${this.musicObj.artist}`)
@@ -173,10 +208,70 @@ export default {
         });
     },
   },
-  metaInfo: {
-    title: `Leccel::${window.location.href.substr(
-      window.location.href.lastIndexOf("/") + 1
-    )}`,
+  metaInfo() {
+    // title: `Leccel::${window.location.href.substr(
+    //   window.location.href.lastIndexOf("/") + 1
+    // )}`,
+    return {
+      title: this.meta.title + " | Leccel",
+      meta: [
+        {
+          vmid: "description",
+          name: "description",
+          content: this.meta.description,
+        },
+        {
+          property: "og:title",
+          content: this.meta.title,
+        },
+        { property: "og:site_name", content: "Leccel" },
+        { property: "og:type", content: "website" },
+        {
+          property: "og:url",
+          content: window.location.href,
+        },
+        {
+          property: "og:image",
+          content: this.meta.image,
+        },
+        {
+          property: "og:description",
+          content: this.meta.description,
+        },
+
+        // Twitter card
+        { name: "twitter:card", content: "summary" },
+        {
+          name: "twitter:site",
+          content: "@leccelj",
+        },
+        {
+          name: "twitter:title",
+          content: this.meta.title,
+        },
+        {
+          name: "twitter:description",
+          content: this.meta.description,
+        },
+        { name: "twitter:creator", content: "@leccelj" },
+        {
+          name: "twitter:image",
+          content: this.meta.image,
+        },
+
+        // Google / Schema.org markup:
+        {
+          itemprop: "name",
+          content: this.meta.title,
+        },
+        { itemprop: "description", content: this.meta.description },
+        {
+          itemprop: "image",
+          content: this.meta.image,
+        },
+      ],
+      link: [{ rel: "canonical", href: this.currentURL }],
+    }
   },
 };
 </script>
