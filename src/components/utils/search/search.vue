@@ -34,13 +34,13 @@
                 role="tablist">
                 <li class="nav-item">
                   <a
-                    :class="`nav-link ${checkGroup('music') ? 'active' : ''}`"
                     id="overview-tab"
+                    :class="`nav-link ${checkGroup('music') ? 'active' : ''}`"
+                    :aria-selected="checkGroup('music')"
                     data-toggle="tab"
                     href="#music"
                     role="tab"
                     aria-controls="music"
-                    :aria-selected="checkGroup('music')"
                   >🎧
                     <sup 
                       style="color: #cc0303; font-weight: bolder"
@@ -50,13 +50,13 @@
                 </li>
                 <li class="nav-item">
                   <a
-                    :class="`nav-link ${checkGroup('movies') ? 'active' : ''}`"
                     id="sales-tab"
+                    :class="`nav-link ${checkGroup('movies') ? 'active' : ''}`"
+                    :aria-selected="checkGroup('movies')"
                     data-toggle="tab"
                     href="#movies"
                     role="tab"
                     aria-controls="movies"
-                    :aria-selected="checkGroup('movies')"
                   >🎬
                     <sup 
                       style="color: #cc0303; font-weight: bolder"
@@ -66,13 +66,13 @@
                 </li>
                 <li class="nav-item">
                   <a
-                    :class="`nav-link ${checkGroup('series') ? 'active' : ''}`"
                     id="purchases-tab"
+                    :class="`nav-link ${checkGroup('series') ? 'active' : ''}`"
+                    :aria-selected="checkGroup('series')"
                     data-toggle="tab"
                     href="#series"
                     role="tab"
                     aria-controls="series"
-                    :aria-selected="checkGroup('series')"
                   >📺
                     <sup 
                       style="color: #cc0303; font-weight: bolder"
@@ -83,18 +83,18 @@
               </ul>
               <div class="tab-content py-3 px-5">
                 <div
+                  id="music"
                   :class="`tab-pane fade show ${
                     checkGroup('music') ? 'active' : ''
                   }`"
-                  id="music"
                   role="tabpanel"
                   aria-labelledby="music-tab"
                 >
                   <router-link
                     v-for="(m, i) in musicSearch"
                     :key="i"
+                    :to="{ name: 'Music', params: { short_url: m.short_url}}"
                     class="h3 font-weight-200 mb-1"
-                    :to="`/music/${m.short_url}`"
                     style="text-decoration: none; color: inherit"
                   >
                     <div
@@ -119,18 +119,18 @@
                   </router-link>
                 </div>
                 <div
+                  id="movies"
                   :class="`tab-pane fade show ${
                     checkGroup('movies') ? 'active' : ''
                   }`"
-                  id="movies"
                   role="tabpanel"
                   aria-labelledby="movies-tab"
                 >
                   <router-link
                     v-for="(v, i) in videoSearch"
                     :key="i"
+                    :to="{name:'Movie', params:{short_url: v.short_url}}"
                     class="h3 font-weight-200 mb-1"
-                    :to="`/video/${v.short_url}`"
                     tag="div"
                   >
                     <div
@@ -155,18 +155,18 @@
                   </router-link>
                 </div>
                 <div
+                  id="series"
                   :class="`tab-pane fade show ${
                     checkGroup('series') ? 'active' : ''
                   }`"
-                  id="series"
                   role="tabpanel"
                   aria-labelledby="series-tab"
                 >
                   <router-link
                     v-for="(s, i) in seriesSearch"
                     :key="i"
+                    :to="{name:'Series', params: {short_url: s.short_url}}"
                     class="h3 font-weight-200 mb-1"
-                    :to="`/series/${s.short_url}`"
                     style="text-decoration: none; color: inherit"
                   >
                     <div
@@ -205,6 +205,11 @@ import { Api_Base, api } from "@/config/config.js";
 
 export default {
   name: "Search",
+  filters: {
+    formatSrc(link) {
+      return `${Api_Base}/${link}`;
+    },
+  },
   data() {
     return {
       group: this.$route.params.group,
@@ -213,14 +218,31 @@ export default {
       state: false,
     };
   },
-  mounted() {
-    this.init();
+  computed: {
+    seriesSearch() {
+      return this.search
+        .filter((s) => s.group === "series")
+        .map((x) => x.data)[0];
+    },
+    musicSearch() {
+      return this.search
+        .filter((s) => s.group === "music")
+        .map((x) => x.data)[0];
+    },
+    videoSearch() {
+      return this.search
+        .filter((s) => s.group === "movies")
+        .map((x) => x.data)[0];
+    },
   },
   watch: {
     $route() {
       this.init();
       this.query = this.$route.params.query;
     },
+  },
+  mounted() {
+    this.init();
   },
   methods: {
     init() {
@@ -240,28 +262,6 @@ export default {
     formatDate(c) {
       let ss = new Date(Date.parse(c));
       return ss.toLocaleDateString();
-    },
-  },
-  computed: {
-    seriesSearch() {
-      return this.search
-        .filter((s) => s.group === "series")
-        .map((x) => x.data)[0];
-    },
-    musicSearch() {
-      return this.search
-        .filter((s) => s.group === "music")
-        .map((x) => x.data)[0];
-    },
-    videoSearch() {
-      return this.search
-        .filter((s) => s.group === "movies")
-        .map((x) => x.data)[0];
-    },
-  },
-  filters: {
-    formatSrc(link) {
-      return `${Api_Base}/${link}`;
     },
   },
 };

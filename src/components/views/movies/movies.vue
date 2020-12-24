@@ -74,15 +74,15 @@
           </div>
           <div class="row show-video">
             <router-link
-              class="col-md-3 grid-margin stretch-card"
               v-for="(rvideo, i) in relatedvideoArr"
               :key="i"
-              :to="`/video/${rvideo.short_url}`"
+              :to="{name:'Movie', params:{short_url: rvideo.short_url}}"
+              class="col-md-3 grid-margin stretch-card"
               tag="div"
             >
               <div class="card card-rounded shadow video">
                 <router-link
-                  :to="`/video/${rvideo.short_url}`"
+                  :to="{name: 'Movie', params: {short_url: rvideo.short_url}}"
                   class="text-decoration-none"
                 >
                   <div class="card-img-holder">
@@ -98,8 +98,8 @@
                   class="card-body p-2" 
                   style="background: #eee">
                   <router-link
+                    :to="{name: 'Movie', params: {short_url: rvideo.short_url}}"
                     class="h3 mb-0"
-                    :to="`/video/${rvideo.short_url}`"
                     style="text-decoration: none; color: inherit"
                   >
                     <h3 
@@ -133,6 +133,11 @@ import timeago from "timeago-simple";
 // ;
 export default {
   name: "ViewVideo",
+  filters: {
+    formatSrc(link) {
+      return `${Api_Base}/${link}`;
+    },
+  },
 
   data() {
     return {
@@ -148,18 +153,13 @@ export default {
       }
     };
   },
-  beforeMount() {
-    this.init();
-  },
-  filters: {
-    formatSrc(link) {
-      return `${Api_Base}/${link}`;
-    },
-  },
   watch: {
     $route() {
       this.init();
     },
+  },
+  beforeMount() {
+    this.init();
   },
   methods: {
     init() {

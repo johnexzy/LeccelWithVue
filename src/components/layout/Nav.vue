@@ -3,7 +3,7 @@
     class="flash-news-banner" 
     style="background: #ffffff; margin-top: -5px">
     <div class="d-flex justify-content-between mt-2">
-      <router-link to="/">
+      <router-link :to="{name:'home'}">
         <img 
           src="/assets/images/LECCEL3.png" 
           alt="" >
@@ -15,9 +15,9 @@
             class="form-group" 
             data-aos="fade-down">
             <ValidationProvider
+              v-slot="{ errors }"
               name="search"
               rules="maxlength"
-              v-slot="{ errors }"
             >
               <div class="input-group">
               
@@ -45,9 +45,9 @@
               
               </div>
               <div
-                class="alert alert-danger mr-3 fs-12 p-0"
                 v-for="(datum, i) in errors"
                 :key="i"
+                class="alert alert-danger mr-3 fs-12 p-0"
               >
                 <i>{{ datum }}</i>
               </div>
@@ -68,7 +68,7 @@
             style="width: 62px; height: 62px"
           >
             <router-link 
-              to="/" 
+              :to="{name:'home'}" 
               class="text-decoration-none">
               <i class="d-block mdi mdi-24px mdi-home" />
               <p class="font-weight-bold text-uppercase">Home</p>
@@ -79,7 +79,7 @@
             style="width: 62px; height: 62px"
           >
             <router-link 
-              to="/view/music" 
+              :to="{name:'AllMusic'}" 
               class="text-decoration-none">
               <i class="d-block mdi mdi-24px mdi-music-note" />
               <p class="font-weight-bold text-uppercase">Music</p>
@@ -90,7 +90,7 @@
             style="width: 62px; height: 62px"
           >
             <router-link 
-              to="/view/movies" 
+              :to="{name:'AllMovies'}" 
               class="text-decoration-none">
               <i class="d-block mdi mdi-24px mdi-video" />
               <p class="font-weight-bold text-uppercase">Movies</p>
@@ -101,7 +101,7 @@
             style="width: 62px; height: 62px"
           >
             <router-link 
-              to="/view/series" 
+              :to="{name:'AllSeries'}"
               class="text-decoration-none">
               <i class="d-block mdi mdi-24px mdi-movie" />
               <p class="font-weight-bold text-uppercase">Series</p>

@@ -46,20 +46,20 @@
               <div class="col-sm-12">
                 <div class="form-group">
                   <ValidationProvider
+                    v-slot="{ errors }"
                     name="comment"
                     rules="required"
-                    v-slot="{ errors }"
                   >
                     <textarea
+                      v-model="comment"
                       class="form-control textarea"
                       placeholder="Comment *"
-                      v-model="comment"
                     />
 
                     <div
-                      class="alert"
                       v-for="(datum, i) in errors"
                       :key="i"
+                      class="alert"
                     >
                       <i>{{ datum }}</i>
                     </div>
@@ -71,8 +71,8 @@
               <div class="col-sm-12">
                 <div class="form-group">
                   <input
-                    type="text"
                     v-model="name"
+                    type="text"
                     class="form-control"
                     aria-describedby="name"
                     placeholder="Name *"

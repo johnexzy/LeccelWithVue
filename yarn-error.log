@@ -1,0 +1,107 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\hp\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add node-sass
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\hp\bin;C:\Python38\Scripts;C:\Python38;C:\Program Files (x86)\MiKTeX 2.9\miktex\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\7-Zip;C:\Program Files (x86)\Skype\Phone;C:\Users\hp\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm;C:\Program Files\Microsoft SQL Server\120\Tools\Binn;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk1.8.0_181\bin;C:\Users\hp\AppData\Local\Programs\Python\Python37;C:\xampp\php;C:\Program Files\Dart\dart-sdk\bin;C:\Users\hp\flutter\packages\flutter_tools;C:\Users\hp\flutter\bin;C:\Program Files (x86)\The Scripps Research Institute\Vina;C:\Program Files\MongoDB\Server\4.0\bin;C:\Gradle\gradle-5.6.2\bin;C:\ProgramData\ComposerSetup\bin;C:\WINDOWS\System32\OpenSSH;C:\Program Files\dotnet;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\xamp\mysql\bin;C:\Program Files\PuTTY;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\hp\AppData\Local\Microsoft\WindowsApps;C:\Users\hp\AppData\Local\Programs\Microsoft VS Code\bin;C:\xampp\php\php.exe;C:\Program Files (x86)\The Scripps Research Institute\Vina;C:\xampp\mysql\bin;C:\Program Files\MongoDB\Server\4.0\bin;C:\Gradle\gradle-5.6.2\bin;C:\Users\hp\AppData\Roaming\Composer\vendor\bin;C:\xampp\php;C:\Git\bin\bash.exe;C:\Git\bin;C:\Program Files\MiKTeX 2.9\miktex\bin\x64;C:\Program Files\MiKTeX 2.9\tex\latex\00miktex;C:\Users\hp\AppData\Roaming\npm
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  13.11.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, copyfile 'C:\Users\hp\AppData\Local\Yarn\Cache\v4\npm-fined-1.2.0-d00beccf1aa2b475d16d423b0238b713a2c4a37b\node_modules\fined\index.js' -> 'C:\Users\hp\source\repos\VuejsApp1\node_modules\fined\index.js'
+
+npm manifest: 
+  {
+    "name": "leccel.net",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Best Movie Plug",
+    "author": {
+      "name": "Oba John"
+    },
+    "scripts": {
+      "serve": "vue-cli-service serve",
+      "build": "vue-cli-service build",
+      "lint": "vue-cli-service lint",
+      "dev": "npm run serve",
+      "make:commit": "cz"
+    },
+    "dependencies": {
+      "@mdi/font": "^3.6.95",
+      "aos": "^2.3.4",
+      "axios": "^0.19.2",
+      "bootstrap": "^4.5.3",
+      "browser-sync": "^2.26.12",
+      "jquery": "^3.5.1",
+      "nprogress": "^0.2.0",
+      "popper.js": "^1.16.1",
+      "register-service-worker": "^1.7.1",
+      "timeago-simple": "^1.2.4",
+      "vee-validate": "^3.2.5",
+      "vue": "^2.6.12",
+      "vue-loader": "^15.9.3",
+      "vue-meta": "^2.4.0",
+      "vue-router": "^3.0.1",
+      "vuex": "^3.3.0"
+    },
+    "devDependencies": {
+      "@vue/cli-plugin-babel": "3.0.4",
+      "@vue/cli-plugin-eslint": "3.0.4",
+      "@vue/cli-plugin-pwa": "^4.5.9",
+      "@vue/cli-service": "3.0.4",
+      "del": "^4.1.1",
+      "eslint": "5.6.0",
+      "eslint-plugin-vue": "4.7.1",
+      "gulp": "^4.0.2",
+      "gulp-concat": "^2.6.1",
+      "gulp-inject": "^5.0.2",
+      "gulp-inject-partials": "^1.0.5",
+      "gulp-replace": "^1.0.0",
+      "gulp-sass": "^4.0.2",
+      "gulp-sourcemaps": "^2.6.5",
+      "merge-stream": "^2.0.0",
+      "sass": "^1.15.2",
+      "sass-loader": "^7.1.0",
+      "vue-template-compiler": "^2.6.12"
+    },
+    "eslintConfig": {
+      "root": true,
+      "env": {
+        "node": true
+      },
+      "extends": [
+        "plugin:vue/strongly-recommended",
+        "eslint:recommended"
+      ],
+      "parserOptions": {
+        "parser": "babel-eslint"
+      }
+    },
+    "postcss": {
+      "plugins": {
+        "autoprefixer": {}
+      }
+    },
+    "browserslist": [
+      "> 1%",
+      "last 2 versions",
+      "not ie <= 8"
+    ],
+    "config": {
+      "commitizen": {
+        "path": "C:/Users/hp/AppData/Roaming/npm/node_modules/cz-conventional-changelog"
+      }
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

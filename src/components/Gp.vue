@@ -1,69 +1,81 @@
 <template>
   <div>
-      <div class="d-flex justify-content-center text-light text-center m-3" data-aos="fade-down">
-            <h3 class="text-uppercase font-weight-600 shadow">
-            Get the Latest Movies, Music and Series for Free on Leccel.net
-            </h3>
-        </div>
+    <div 
+      class="d-flex justify-content-center text-light text-center m-3" 
+      data-aos="fade-down">
+      <h3 class="text-uppercase font-weight-600 shadow">
+        Get the Latest Movies, Music and Series for Free on Leccel.net
+      </h3>
+    </div>
     <ValidationObserver v-slot="{ passes }">
       <fieldset>
         <legend>ADD NEW COURSE</legend>
-        <div style="margin-bottom: 5px; border-radius: 5px" class="container">
+        <div 
+          style="margin-bottom: 5px; border-radius: 5px" 
+          class="container">
           <form @submit.prevent="passes(addCourse)">
             <ValidationProvider
+              v-slot="{ errors }"
               name="skill"
               rules="required"
-              v-slot="{ errors }"
             >
               <label for="newcourse">Course:</label>
               <input
+                v-model="coursename"
                 name="newcourse"
                 class="newcourse"
                 type="text"
                 placeholder="Write Course Code "
-                v-model="coursename"
-              />
-              <div class="alert" v-for="(datum, i) in errors" v-bind:key="i">
+              >
+              <div 
+                v-for="(datum, i) in errors" 
+                :key="i" 
+                class="alert">
                 <i>{{ datum }}</i>
               </div>
             </ValidationProvider>
-            <br />
+            <br >
             <div style="margin-top: 1rem">
               <label for="newunit">Course Unit:&nbsp;</label>
               <input
+                v-model="courseUnit"
                 placeholder="2"
                 type="number"
                 class="newcourse"
                 style="width: 40px"
-                v-model="courseUnit"
-              />
+              >
               <br>
               <div style="margin: 1rem 0">
                 <label for="grade">Grade:&nbsp;</label>
                 <select
-                    v-model="grade"
-                    id
-                    style="
+                  id
+                  v-model="grade"
+                  style="
                     font-size: 1em;
                     width: 4rem;
                     background: #000000a8;
                     color: #fff;
                     "
                 >
-                    <option value="A" selected>A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                    <option value="F">F</option>
+                  <option 
+                    value="A" 
+                    selected>A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
                 </select>
 
               </div>
             </div>
             <div class="btnAddSec">
-                <button @click="passes(addCourse)" class="btnAdd" type="submit">
-                    <span style="font-weight:bold;font-size:16px;font-family:monospace">&plus;</span> COURSE
-                </button>
+              <button 
+                class="btnAdd" 
+                type="submit" 
+                @click="passes(addCourse)">
+                <span style="font-weight:bold;font-size:16px;font-family:monospace">&plus;</span> COURSE
+              </button>
             </div>
             
           </form>
@@ -73,19 +85,22 @@
           <b>
             Current GPA:
             <span
-              v-bind:class="{
+              :class="{
                 excellent: gpState(1),
                 good: gpState(2),
                 poor: gpState(4),
                 fair: gpState(3),
               }"
-              >{{ currentGp }}</span
+            >{{ currentGp }}</span
             >
           </b>
         </div>
       </fieldset>
     </ValidationObserver>
-    <table cellpadding="1px" cellspacing="1px" v-if="courses.length > 0">
+    <table 
+      v-if="courses.length > 0" 
+      cellpadding="1px" 
+      cellspacing="1px">
       <th>Course</th>
       <th>UNITS</th>
       <th>GRADE</th>
@@ -94,26 +109,32 @@
         v-for="(data, index) in courses"
         :key="index"
       >
-        <td style="border: none" id="dept">
+        <td 
+          id="dept" 
+          style="border: none">
           {{ data.coursename.toUpperCase() }}
         </td>
         <td>
           <input
+            v-model="data.courseUnit"
             class="form-input"
             type="number"
-            v-model="data.courseUnit"
             placeholder="Unit Load"
-          />
+          >
         </td>
         <td>
-          <select class="select" v-model="data.grade">
+          <select 
+            v-model="data.grade" 
+            class="select">
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
             <option value="D">D</option>
             <option value="E">E</option>
             <option value="F">F</option>
-            <option value selected>Grade</option>
+            <option 
+              value 
+              selected>Grade</option>
           </select>
         </td>
         <td
@@ -126,35 +147,43 @@
         >
           <!-- <i >&minus;</i> -->
           <img
-            @click="remove(index)"
-            v-bind:style="removeStyle"
+            :style="removeStyle"
             src="./bad.png"
             alt="kokok"
             style="width: 40%; height: 30px"
-          />
+            @click="remove(index)"
+          >
         </td>
       </tr>
       <tr>
-        <td style="border: none"></td>
-        <td align="center" style="border: none">
+        <td style="border: none"/>
+        <td 
+          align="center" 
+          style="border: none">
           <input
-            type="button"
-            @click="calcGp()"
             id="button1"
+            type="button"
             value="Calculate GP"
-          />
+            @click="calcGp()"
+          >
         </td>
-        <td style="border: none"></td>
+        <td style="border: none"/>
       </tr>
     </table>
     <div class="holder">
-      <p v-if="courses.length == 0" v-bind:style="{ color: '#3b5998' }">
+      <p 
+        v-if="courses.length == 0" 
+        :style="{ color: '#3b5998' }">
         Please add some courses
       </p>
-      <p v-else-if="courses.length == 1" v-bind:style="{ color: '#3b5998' }">
+      <p 
+        v-else-if="courses.length == 1" 
+        :style="{ color: '#3b5998' }">
         You have {{ courses.length }} course
       </p>
-      <p v-else v-bind:style="{ color: '#3b5998' }">
+      <p 
+        v-else 
+        :style="{ color: '#3b5998' }">
         You have {{ courses.length }} courses
       </p>
     </div>
@@ -197,12 +226,12 @@ export default {
       currentGp: 5.0,
     };
   },
+  computed: {},
   watch: {
       grade(){
           this.calcGp()
       }
   },
-  computed: {},
   methods: {
     gpState(state) {
       var gp = this.currentGp;

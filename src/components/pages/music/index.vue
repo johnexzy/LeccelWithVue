@@ -14,9 +14,9 @@
                   class="form-group" 
                   data-aos="fade-down">
                   <ValidationProvider
+                    v-slot="{ errors }"
                     name="search"
                     rules="maxlength"
-                    v-slot="{ errors }"
                   >
                     <div class="input-group">
                       <input
@@ -32,9 +32,9 @@
                       >
                     </div>
                     <div
-                      class="alert alert-danger mr-3 fs-12 p-0"
                       v-for="(datum, i) in errors"
                       :key="i"
+                      class="alert alert-danger mr-3 fs-12 p-0"
                     >
                       <i>{{ datum }}</i>
                     </div>
@@ -74,8 +74,8 @@
                 <router-link
                   v-for="(pmusic, i) in popularMusic"
                   :key="i"
+                  :to="{ name: 'Music', params: { short_url: pmusic.short_url}}"
                   class="h3 font-weight-200 mb-1"
-                  :to="`/music/${pmusic.short_url}`"
                   style="text-decoration: none; color: inherit"
                 >
                   <div
@@ -130,7 +130,7 @@
                       <router-link
                         v-for="(music, i) in musicArr"
                         :key="i"
-                        :to="`/music/${music.short_url}`"
+                        :to="{ name: 'Music', params: { short_url: music.short_url}}"
                         tag="div"
                         style="cursor: pointer"
                         class="col-md-4 grid-margin stretch-card"
@@ -244,6 +244,9 @@ export default {
   computed: {
     ...mapState(["popularMusic"]),
   },
+  beforeMount() {
+    this.makeReq("+ 1");
+  },
   methods: {
     makeReq(param) {
       if (this.isLastPage && param == "+ 1") return;
@@ -266,9 +269,6 @@ export default {
       let ss = new Date(Date.parse(c));
       return ss.toLocaleDateString();
     },
-  },
-  beforeMount() {
-    this.makeReq("+ 1");
   },
 };
 </script>

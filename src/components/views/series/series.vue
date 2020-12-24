@@ -1,9 +1,7 @@
 <template>
   <div class="content-wrapper">
-
     <div class="container">
-      <div 
-        v-show="!state">
+      <div v-show="!state">
         <div class="d-flex justify-content-center">
           <img 
             src="/assets/images/loader.gif" 
@@ -11,7 +9,7 @@
         </div>
       </div>
       <div 
-        v-show="state"
+        v-show="state" 
         class="card card-square">
         <!-- {{ seriesObj.series_name }} -->
         <div class="card-header">
@@ -26,7 +24,7 @@
             <div class="col-sm-6">
               <div class="row">
                 <div class="col-lg-12 mb-5 mb-sm-2">
-                  <carousel-img :images="seriesObj.images"/>
+                  <carousel-img :images="seriesObj.images" />
                 </div>
               </div>
             </div>
@@ -38,8 +36,14 @@
               <router-link
                 v-for="(season, i) in seriesObj.series"
                 :key="i"
+                :to="{
+                  name: 'Season',
+                  params: {
+                    series_name: seriesObj.series_name,
+                    season_short_url: season.short_url,
+                  },
+                }"
                 tag="div"
-                :to="`/season/${seriesObj.series_name}/${season.short_url}`"
               >
                 <div
                   class="d-flex justify-content-start border-bottom py-3 shadow"
@@ -65,15 +69,16 @@
           </div>
           <div
             v-if="popularSeries.length > 0"
-            class="d-block mb-4 mt-4 text-center">
+            class="d-block mb-4 mt-4 text-center"
+          >
             <h3>You may also like:</h3>
           </div>
           <div class="row show-series">
             <router-link
-              class="col-md-3 grid-margin stretch-card"
               v-for="(rseries, i) in relatedseriesArr"
               :key="i"
-              :to="`/series/${rseries.short_url}`"
+              :to="{name: 'Series', params: {short_url: rseries.short_url}}"
+              class="col-md-3 grid-margin stretch-card"
               tag="div"
             >
               <div class="card card-rounded shadow series">
@@ -96,7 +101,7 @@
               </div>
             </router-link>
           </div>
-          <div class="mt-3"/>
+          <div class="mt-3" />
 
           <comment
             :comment-key="seriesObj.series_key"
@@ -114,6 +119,11 @@ import timeago from "timeago-simple";
 import { mapState } from "vuex";
 export default {
   name: "ViewSeries",
+  filters: {
+    formatSrc(link) {
+      return `${Api_Base}/${link}`;
+    },
+  },
   data() {
     return {
       seriesObj: {},
@@ -122,25 +132,21 @@ export default {
       state: false,
     };
   },
-  computed:{
-    ...mapState(['popularSeries'])
-  },
-  mounted() {
-    this.init();
-  },
-  filters: {
-    formatSrc(link) {
-      return `${Api_Base}/${link}`;
-    },
+  computed: {
+    ...mapState(["popularSeries"]),
   },
   watch: {
     $route() {
       this.init();
     },
   },
+  mounted() {
+    this.init();
+  },
+
   methods: {
     init() {
-      this.state = false
+      this.state = false;
       api
         .get(`/api/v1/series/url/${this.$route.params.short_url}`)
         .then((res) => {
@@ -152,8 +158,10 @@ export default {
           }));
 
           //related series Obj fires when {this.seriesObj} is updated
-          this.relatedseriesArr = this.popularSeries.filter((val) => val.id !== this.seriesObj.id);
-          this.state = true
+          this.relatedseriesArr = this.popularSeries.filter(
+            (val) => val.id !== this.seriesObj.id
+          );
+          this.state = true;
         });
     },
   },

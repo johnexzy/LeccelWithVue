@@ -1,9 +1,7 @@
 <template>
   <div class="content-wrapper">
-
     <div class="container">
-      <div 
-        v-show="!state">
+      <div v-show="!state">
         <div class="d-flex justify-content-center">
           <img 
             src="/assets/images/loader.gif" 
@@ -11,7 +9,7 @@
         </div>
       </div>
       <div 
-        v-show="state"
+        v-show="state" 
         class="card card-square">
         <!-- {{ seasonObj.series_name }} -->
         <div class="card-header">
@@ -33,8 +31,14 @@
               <router-link
                 v-for="(ep, i) in seasonObj.episodes"
                 :key="i"
+                :to="{
+                  name: 'Episode',
+                  params: {
+                    series_name: seasonObj.series_name,
+                    episode_short_url: ep.short_url,
+                  },
+                }"
                 tag="div"
-                :to="`/episode/${seasonObj.series_name}/${ep.short_url}`"
               >
                 <div
                   class="d-flex justify-content-start border-bottom py-3 shadow"
@@ -57,7 +61,7 @@
               <hr >
             </div>
           </div>
-          <div class="mt-3"/>
+          <div class="mt-3" />
 
           <comment
             :comment-key="seasonObj.season_key"
@@ -75,28 +79,28 @@ import { api, Api_Base } from "@/config/config.js";
 import timeago from "timeago-simple";
 export default {
   name: "ViewSeasons",
+  filters: {
+    formatSrc(link) {
+      return `${Api_Base}/${link}`;
+    },
+  },
   data() {
     return {
       seasonObj: {},
       state: false,
     };
   },
-  mounted() {
-    this.init();
-  },
-  filters: {
-    formatSrc(link) {
-      return `${Api_Base}/${link}`;
-    },
-  },
   watch: {
     $route() {
       this.init();
     },
   },
+  mounted() {
+    this.init();
+  },
   methods: {
     init() {
-      this.state = false
+      this.state = false;
       api
         .get(
           `/api/v1/season/${this.$route.params.series_name}/${this.$route.params.season_short_url}`
@@ -115,7 +119,7 @@ export default {
             comment: x.comment,
             updated_at: timeago.simple(x.updated_at),
           }));
-          this.state = true
+          this.state = true;
         });
     },
   },

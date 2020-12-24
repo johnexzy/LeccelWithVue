@@ -14,9 +14,9 @@
                   class="form-group" 
                   data-aos="fade-down">
                   <ValidationProvider
+                    v-slot="{ errors }"
                     name="search"
                     rules="maxlength"
-                    v-slot="{ errors }"
                   >
                     <div class="input-group">
                       <input
@@ -32,9 +32,9 @@
                       >
                     </div>
                     <div
-                      class="alert alert-danger mr-3 fs-12 p-0"
                       v-for="(datum, i) in errors"
                       :key="i"
+                      class="alert alert-danger mr-3 fs-12 p-0"
                     >
                       <i>{{ datum }}</i>
                     </div>
@@ -74,8 +74,8 @@
                 <router-link
                   v-for="(pseries, i) in popularSeries"
                   :key="i"
+                  :to="{name:'Series', params:{short_url: pseries.short_url}}"
                   class="h3 font-weight-200 mb-1"
-                  :to="`/series/${pseries.short_url}`"
                   style="text-decoration: none; color: inherit"
                 >
                   <div
@@ -135,8 +135,7 @@
                         class="col-md-4 grid-margin stretch-card"
                       >
                         <router-link
-                          :to="`/series/${series.short_url}`"
-                          tag="a"
+                          :to="{name:'Series', params:{short_url: series.short_url}}"
                           class="card card-rounded shadow series text-decoration-none"
                           style="color: inherit"
                         >
@@ -296,6 +295,9 @@ export default {
   computed: {
     ...mapState(["popularSeries"]),
   },
+  beforeMount() {
+    this.makeReq("+ 1");
+  },
   methods: {
     makeReq(param) {
       if (this.isLastPage && param == "+ 1") return;
@@ -318,9 +320,6 @@ export default {
       let ss = new Date(Date.parse(c));
       return ss.toLocaleDateString();
     },
-  },
-  beforeMount() {
-    this.makeReq("+ 1");
   },
 };
 </script>

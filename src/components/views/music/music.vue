@@ -55,13 +55,13 @@
               <div class="d-flex justify-content-center align-items-center">
                 <aplayer 
               
-                  autoplay
                   :music="{
                     title: musicObj.music_name,
                     artist: musicObj.artist,
                     src: meta.audio,
                     pic: meta.image
                   }"
+                  autoplay
                 />
               </div>
             
@@ -102,10 +102,10 @@
           </div>
           <div class="row show-music">
             <router-link
-              class="col-md-3 grid-margin stretch-card"
               v-for="(rmusic, i) in relatedmusicArr"
               :key="i"
-              :to="`/music/${rmusic.short_url}`"
+              :to="{ name: 'Music', params: { short_url: rmusic.short_url}}"
+              class="col-md-3 grid-margin stretch-card"
               tag="div"
             >
               <div class="card card-rounded shadow music">
@@ -145,8 +145,17 @@
 import { api, Api_Base } from "@/config/config.js";
 import { formatMusic } from "@/helpers/ArrayFormatter";
 import timeago from "timeago-simple";
+import aplayer from "vue-aplayer"
 export default {
   name: "ViewMusic",
+  filters: {
+    formatSrc(link) {
+      return `${Api_Base}/${link}`;
+    },
+  },
+  components:{
+    aplayer
+  },
   data() {
     return {
       musicObj: {},
@@ -162,18 +171,13 @@ export default {
       }
     };
   },
-  beforeMount() {
-    this.init();
-  },
-  filters: {
-    formatSrc(link) {
-      return `${Api_Base}/${link}`;
-    },
-  },
   watch: {
     $route() {
       this.init();
     },
+  },
+  beforeMount() {
+    this.init();
   },
   methods: {
     init() {

@@ -2,16 +2,19 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { api } from '../config/config';
 import { formatMusic, formatSeries, formatVideos } from '../helpers/ArrayFormatter';
-
+import news from "./modules/news"
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+    modules: {
+        news
+    },
     state: {
         // latest
         latestMusic: [],
         latestMovies: [],
         latestSeries: [],
-        
+
         //popular
         popularMusic: [],
         popularVideo: [],
@@ -60,7 +63,7 @@ export default new Vuex.Store({
          * @param {commit} commit Commit
          * @return commit
          */
-        async getPopularVideo({commit}){
+        async getPopularVideo({ commit }) {
             return commit('setPopularVideo', await api.get(`/api/v1/videos/popular/10`))
         },
 
@@ -69,7 +72,7 @@ export default new Vuex.Store({
          * @param {Commit} commit Commit
          * @return commit
          */
-        async getPopularSeries({commit}){
+        async getPopularSeries({ commit }) {
             return commit('setPopularSeries', await api.get(`/api/v1/series/popular/10`))
         }
 
@@ -102,7 +105,7 @@ export default new Vuex.Store({
         setLatestSeries(state, res) {
             state.latestSeries = formatSeries(res.data)
         },
-        
+
         /**
          * Set's popularMusic Array from Commit
          * @param {Object} state $Store.state.popularMusic

@@ -15,9 +15,9 @@
                       <div class="col-sm-12">
                         <div class="form-group">
                           <textarea
+                            id="message"
                             class="form-control textarea"
                             placeholder="Comment *"
-                            id="message"
                           />
                         </div>
                       </div>
@@ -26,9 +26,9 @@
                       <div class="col-sm-6">
                         <div class="form-group">
                           <input
+                            id="name"
                             type="text"
                             class="form-control"
-                            id="name"
                             aria-describedby="name"
                             placeholder="Name *"
                           >
@@ -37,9 +37,9 @@
                       <div class="col-sm-6">
                         <div class="form-group">
                           <input
+                            id="email"
                             type="email"
                             class="form-control"
-                            id="email"
                             aria-describedby="email"
                             placeholder="Email *"
                           >

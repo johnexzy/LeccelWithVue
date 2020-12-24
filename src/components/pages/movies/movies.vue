@@ -6,9 +6,9 @@
           <p style="font-size: 17px; font-weight: bold">Movies</p>
 
           <router-link
+            :to="{name:'AllMovies'}"
             class="mb-2 btn btn-outline-light btn-primary btn-info"
             style="font-size: 16px"
-            to="/view/movies"
           >
             Go to Movies <b class="mdi">&RightArrow;</b>
           </router-link>
@@ -26,7 +26,7 @@
               >
                 <div class="position-relative">
                   <router-link
-                    :to="`/video/${lmovie.short_url}`"
+                    :to="{name:'Movie', params:{short_url:lmovie.short_url}}"
                     style="text-decoration: none; color: inherit"
                   >
                     <div class="rotate-img">
@@ -47,7 +47,7 @@
                       }}</span>
                       <div class="video-icon">
                         <router-link
-                          :to="`/video/${lmovie.short_url}`"
+                          :to="{name:'Movie', params:{short_url:lmovie.short_url}}"
                           style="text-decoration: none; color: inherit"
                         ><i class="mdi mdi-play"/></router-link>
                       </div>
@@ -66,7 +66,7 @@
               >
                 <div class="position-relative">
                   <router-link
-                    :to="`/video/${lmovie.short_url}`"
+                    :to="{name:'Movie', params:{short_url:lmovie.short_url}}"
                     style="text-decoration: none; color: inherit"
                   >
                     <div class="rotate-img">
@@ -87,7 +87,7 @@
                       }}</span>
                       <div class="video-icon">
                         <router-link
-                          :to="`/video/${lmovie.short_url}`"
+                          :to="{name:'Movie', params:{short_url:lmovie.short_url}}"
                           style="text-decoration: none; color: inherit"
                         ><i class="mdi mdi-play"/></router-link>
                       </div>
@@ -101,8 +101,8 @@
             <div class="d-flex justify-content-between align-items-center">
               <div class="card-title">More Videos</div>
               <router-link
+                :to="{name:'AllMovies'}"
                 class="mb-2 btn btn-outline-light btn-primary btn-info"
-                to="/view/movies"
               >
                 See All Movies
               </router-link>
@@ -111,7 +111,7 @@
             <router-link
               v-for="(lmovie, i) in otherMovies"
               :key="i"
-              :to="`/video/${lmovie.short_url}`"
+              :to="{name:'Movie', params:{short_url: lmovie.short_url}}"
               class="h3 font-weight-200 mb-1"
               style="text-decoration: none; color: inherit"
             >

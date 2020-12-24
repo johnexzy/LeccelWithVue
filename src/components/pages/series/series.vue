@@ -19,7 +19,7 @@
               >
                 <div class="card card-rounded shadow music">
                   <router-link
-                    :to="`/series/${lseries.short_url}`"
+                    :to="{name:'Series', params:{short_url: lseries.short_url}}"
                     class="text-decoration-none"
                   >
                     <div class="card-img-holder">
@@ -35,7 +35,7 @@
                     class="card-body p-2" 
                     style="background: #eee">
                     <router-link
-                      :to="`/series/${lseries.short_url}`"
+                      :to="{name:'Series', params:{short_url: lseries.short_url}}"
                       class="h3 mb-0"
                       style="text-decoration: none; color: inherit"
                     >

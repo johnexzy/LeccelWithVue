@@ -14,7 +14,7 @@ export default new Router({
 
     // Music
     {
-        path: '/music/:short_url',
+        path: '/view/music/:short_url',
         name: 'Music',
         component: () => import('@/components/views/music/music.vue')
     }, {
@@ -30,15 +30,15 @@ export default new Router({
         name: 'AllSeries',
         component: () => import('@/components/pages/series/index.vue')
     }, {
-        path: '/series/:short_url',
+        path: '/view/series/:short_url',
         name: 'Series',
         component: () => import('@/components/views/series/series.vue')
     }, {
-        path: '/season/:series_name/:season_short_url',
+        path: '/view/season/:series_name/:season_short_url',
         name: 'Season',
         component: () => import('@/components/views/series/season/seasons.vue')
     }, {
-        path: '/episode/:series_name/:episode_short_url',
+        path: '/view/episode/:series_name/:episode_short_url',
         name: 'Episode',
         component: () => import('@/components/views/series/season/episode/episodes.vue')
     },
@@ -50,7 +50,7 @@ export default new Router({
         component: () => import('@/components/pages/movies/index.vue')
     },
     {
-        path: '/video/:short_url',
+        path: '/view//video/:short_url',
         name: 'Movie',
         component: () => import('@/components/views/movies/movies.vue')
     },

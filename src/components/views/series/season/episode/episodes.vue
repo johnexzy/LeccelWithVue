@@ -81,6 +81,11 @@ import { formatVideos } from "@/helpers/ArrayFormatter";
 import timeago from "timeago-simple";
 export default {
   name: "ViewEpisodes",
+  filters: {
+    formatSrc(link) {
+      return `${Api_Base}/${link}`;
+    },
+  },
 
   data() {
     return {
@@ -88,19 +93,14 @@ export default {
       state: false,
     };
   },
-  mounted() {
-    this.init();
-  },
-  filters: {
-    formatSrc(link) {
-      return `${Api_Base}/${link}`;
-    },
-  },
   watch: {
     $route() {
       this.init();
       
     },
+  },
+  mounted() {
+    this.init();
   },
   methods: {
     init() {

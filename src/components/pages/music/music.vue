@@ -11,8 +11,8 @@
           <router-link
             v-for="(pmusic, i) in popularMusic"
             :key="i"
+            :to="{ name: 'Music', params: { short_url: pmusic.short_url}}"
             class="h3 font-weight-200 mb-1"
-            :to="`/music/${pmusic.short_url}`"
             style="text-decoration: none; color: inherit"
           >
             <div
@@ -57,8 +57,8 @@
           <router-link
             v-for="(lmusic, i) in latestMusic"
             :key="i"
+            :to="{ name: 'Music', params: { short_url: lmusic.short_url}}"
             class="h3 font-weight-200 mb-1"
-            :to="`/music/${lmusic.short_url}`"
             style="text-decoration: none; color: inherit"
           >
             <div

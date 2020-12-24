@@ -8,9 +8,9 @@
       <li
         v-for="(i) in images"
         :key="i"
-        data-target="#carouselExampleIndicators"
         :data-slide-to="i"
         :class="i == 0 ? 'active' : ''"
+        data-target="#carouselExampleIndicators"
       />
     </ol>
     <div class="carousel-inner">
@@ -20,9 +20,9 @@
         :class="i == 0 ? 'carousel-item active' : 'carousel-item'"
       >
         <img
-          class="d-block w-100"
           :src="image | formatSrc"
           :alt="`slide ${i}`"
+          class="d-block w-100"
         >
       </div>
     </div>
@@ -55,16 +55,16 @@
 import { Api_Base } from "@/config/config.js"
 export default {
   name: "CarouselImg",
+  filters: {
+    formatSrc(link) {
+      return `${Api_Base}/${link}`;
+    },
+  },
   props: {
     images: {
       type: Array,
       default: () => []
     }
-  },
-  filters: {
-    formatSrc(link) {
-      return `${Api_Base}/${link}`;
-    },
   },
 };
 </script>
