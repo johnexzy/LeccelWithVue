@@ -176,7 +176,7 @@ export default {
       this.init();
     },
   },
-  beforeMount() {
+  mounted() {
     this.init();
   },
   methods: {
@@ -217,7 +217,7 @@ export default {
     //   window.location.href.lastIndexOf("/") + 1
     // )}`,
     return {
-      title: this.meta.title + " | Leccel",
+      title: this.meta.title,
       meta: [
         {
           vmid: "description",

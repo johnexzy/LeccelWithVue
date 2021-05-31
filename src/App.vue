@@ -40,15 +40,27 @@ export default {
     this.$store.dispatch("getPopularSeries");
     this.$store.dispatch("fetchMovie");
   },
+  metaInfo: {
+    // if no subcomponents specify a metaInfo.title, this title will be used
+    title: "Leccel Music",
+    // all titles will be injected into this template
+    titleTemplate: "%s | Leccel Music",
+    meta: [{
+      vmid: 'description',
+      name: 'description',
+      content: 'Get the latest movies, music and series for free. Best Movie Plug',
+    }]
+  },
   mounted() {
-    (function (s, u, z, p) {
-      (s.async = true), (s.src = u), s.setAttribute("data-ad-client", z), p.appendChild(s);
-    })(
-      document.createElement("script"),
-      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
-      "ca-pub-8373811857243589",
-      document.head || document.documentElement
-    );
+
+    // (function (s, u, z, p) {
+    //   (s.async = true), (s.src = u), s.setAttribute("data-ad-client", z), p.appendChild(s);
+    // })(
+    //   document.createElement("script"),
+    //   "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
+    //   "ca-pub-8373811857243589",
+    //   document.head || document.documentElement
+    // );
     // (function (s, u, z, p) {
     //   (s.src = u), s.setAttribute("data-zone", z), p.appendChild(s);
     // })(
@@ -57,6 +69,8 @@ export default {
     //   3758037,
     //   document.body || document.documentElement
     // );
+    // (function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',3751869,document.body||document.documentElement),
+    // (function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',3751869,document.body||document.documentElement)
   },
 };
 </script>
