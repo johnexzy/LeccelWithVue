@@ -134,5 +134,60 @@ export default new Vuex.Store({
         },
 
     },
+    getters: {
+        /**
+         * 
+         * @param {Object} state states oject
+         * @returns {Array} latestmusic
+         */
+        LatestMusic(state) {
+            return state.latestMusic
+        },
+
+        /**
+         * Returns Popular music
+         * @param {Object} state states oject
+         * @returns {Array} popular music
+         */
+        PopularMusic (state) {
+            return state.popularMusic
+        },
+
+        /**
+         * Returns Latest movies
+         * @param {Object} state states oject
+         * @returns {Array} latest movies
+         */
+        LatestMovies (state) {
+            return state.latestMovies
+        },
+
+        /**
+         * Returns Popular movies
+         * @param {Object} state states oject
+         * @returns {Array} popular movies
+         */
+        PopularMovies (state) {
+            return state.popularVideo
+        },
+
+        /**
+         * Returns Popular series
+         * @param {Object} state states oject
+         * @returns {Array} popular series
+         */
+        PopularSeries (state) {
+            return state.popularSeries
+        },
+
+        /**
+         * Returns Latest series
+         * @param {Object} state states oject
+         * @returns {Array} latest series
+         */
+        LatestSeries (state) {
+            return state.latestSeries
+        },
+    },
     strict: false
 })
